@@ -1,0 +1,13 @@
+{% extends parent_template|default:'base.html' %}
+
+{% block content %}
+<section>
+    <h2>Delete {{ org.name }}</h2>
+    <form action="{% url 'proj_delete' pk=proj.pk %}" method="post"> 
+    {% csrf_token %}
+    <p>Are you sure you want to delete {{ proj.name }}?</p>
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a class="btn btn-success text-white" onclick="history.back()">Cancel</a>
+    </form>
+</section>
+{% endblock content %}

@@ -1,0 +1,13 @@
+{% extends parent_template|default:'base.html' %}
+
+{% block content %}
+<section>
+    <h2>Delete {{ webapp }}</h2>
+    <form action="{% url 'webapp_delete' pk=webapp.pk %}" method="post"> 
+    {% csrf_token %}
+    <p>Are you sure you want to delete {{ webapp }}?</p>
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a class="btn btn-success text-white" onclick="history.back()">Cancel</a>
+    </form>
+</section>
+{% endblock content %}

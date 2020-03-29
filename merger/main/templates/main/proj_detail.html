@@ -1,0 +1,111 @@
+{% extends parent_template|default:'base.html' %}
+
+{% block content %}
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div>
+            <h2 class="d-inline-block">{{ proj.name }}</h2>
+                <a class="badge badge-warning align-text-top" href="{% url 'proj_edit' pk=proj.pk %}">Edit</a>
+                <a class="badge badge-danger right align-text-top"href="{% url 'proj_delete' pk=proj.pk %}">Delete</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="d-inline-block">Info</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><b>Organization:</b> {{ proj.org_name }}</li>
+                        <li class="list-group-item"><a class="badge badge-success align-text-top" href="{% url 'domain_create' %}">Add</a> <b>Domains:</b> 
+                        {% for domain in proj.domain_set.all %}{{ domain }} <a class="badge badge-danger align-text-top" href="{% url 'domain_delete' pk=domain.pk %}">X</a>{% if not forloop.last %}, {% endif %} {% endfor %}
+                        </li>
+                        <li class="list-group-item"><a class="badge badge-success align-text-top" href="{% url 'netaddr_create' %}">Add</a> <b>Network Addresses:</b> 
+                        {% for net_address in proj.netaddr_set.all %}{{ net_address }} 
+                        <a class="badge badge-danger align-text-top" href="{% url 'netaddr_delete' pk=net_address.pk %}">X</a>{% if not forloop.last %}, {% endif %} {% endfor %}
+                        </li>
+                        <li class="list-group-item"><b>Start Date:</b> {{ proj.init_date }}</li>
+                        <li class="list-group-item"><b>End Date:</b> {{ proj.end_date }}</li>
+                    </ul>
+                </div>
+                <br>
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <h5 class="d-inline-block">Systems</h5> <a class="badge badge-success align-text-top" href="{% url 'sys_create' %}">Create</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                    {% if proj.sys_set.all %}
+                        <table class="card-table table table-hover">
+                            <tr>
+                                <th>IP Address</th>
+                                <th>FQDN</th>
+                                <th>OS</th>
+                                <th>Version</th>
+                                <th>Ports</th>
+                            </tr>
+                            {% for sys in proj.sys_set.all %}
+                            <tr>
+                                <td>
+                                <a href="{% url 'sys_detail' pk=sys.pk %}">{{ sys.ip_address }}</a>
+                                <a class="badge badge-warning align-text-top" href="{% url 'sys_edit' pk=sys.pk %}">Edit</a>
+                                <a class="badge badge-danger align-text-top" href="{% url 'sys_delete' pk=sys.pk %}">Delete</a>
+                                </td>
+                                <td>{{ sys.fqdn }}</td>
+                                <td>{{ sys.os }} </td>
+                                <td>{{ sys.version }} </td>
+                                <td>{{ sys.port_set.all|length }}: {% for port in sys.port_set.all %}{{ port }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    {% endif %}
+                    </div>
+                </div>
+                <br>
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="d-inline-block">Comments</h5>
+                    </div>
+                    <div class="card-body">
+                        <span>{{ proj.comments }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                        <div class="card-header">
+                            <h5 class="d-inline-block">Points of Contact</h5> <a class="badge badge-success align-text-top" href="{% url 'poc_create' %}">Create</a>
+                        </div>
+                        <div class="card-body">
+                        {% if proj.poc_set.all %}
+                            <table class="card-table table table-sm table-hover">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Role</th>
+                                    <th>Email Address</th>
+                                    <th>Phone Number</th>
+                                </tr>
+                                {% for poc in proj.poc_set.all %}
+                                <tr>
+                                    <td>
+                                    <a href="{% url 'poc_detail' pk=poc.pk %}">{{ poc.name }}</a>
+                                    <a class="badge badge-warning align-text-top" href="{% url 'poc_edit' pk=poc.pk %}">Edit</a>
+                                    <a class="badge badge-danger align-text-top" href="{% url 'poc_delete' pk=poc.pk %}">Delete</a>
+                                    </td>
+                                    <td>{{ poc.role }}</td>
+                                    <td>{{ poc.email }}</td>
+                                    <td>{{ poc.phone }}</td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
