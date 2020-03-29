@@ -1,0 +1,8 @@
+{% extends parent_template|default:'base.html' %}
+
+{% block content %}
+<section>
+    <p>If you need to see the projects, click on <a href="{% url 'proj_list' %}">List Project</a><p>
+    <p>If you need to create a new project, click on <a href="{% url 'proj_create' %}">Create Project</a><p>
+<section>
+{% endblock content %}

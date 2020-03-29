@@ -1,0 +1,41 @@
+{% extends parent_template|default:'base.html' %}
+
+{% block content %}
+<section>
+    <div class="container-fluid">
+        <div class="row">
+                <div>
+                    <h2 class="d-inline-block">{{ poc.name }}</h2>
+                    <a class="badge badge-warning align-text-top" href="{% url 'poc_edit' pk=poc.pk %}">Edit</a>
+                    <a class="badge badge-danger align-text-top"href="{% url 'poc_delete' pk=poc.pk %}">Delete</a>
+                </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Info</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><b>Name:</b> {{ poc.name }}</li>
+                            <li class="list-group-item"><b>Role:</b> {{ poc.role }}</li>
+                            <li class="list-group-item"><b>Email Address:</b> {{ poc.email }}</li>
+                            <li class="list-group-item"><b>Phone Number:</b> {{ poc.phone }}</li>
+                        </ul>
+                    </div>
+                </div>
+                <br>
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Comments</h5>
+                    </div>
+                    <div class="card-body">
+                    {{ poc.comments }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

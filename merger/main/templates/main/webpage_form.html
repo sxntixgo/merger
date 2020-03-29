@@ -1,0 +1,19 @@
+{% extends parent_template|default:'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<section>
+    {% if webpage %}
+    <h2>Edit {{ webpage }}</h2>
+    <form action="{% url 'webpage_edit' pk=webpage.pk %}" method="post"> 
+    {% else %}
+    <h2>Create Webpage</h2>
+    <form method="post"> 
+    {% endif %}
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-success">Submit</button>
+    <a class="btn btn-danger text-white" onclick="history.back()">Cancel</a>
+    </form>
+</section>
+{% endblock content %}

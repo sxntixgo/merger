@@ -1,0 +1,48 @@
+{% extends parent_template|default:'base.html' %}
+
+{% block content %}
+<section class="container-fluid">
+    <div class="row">
+        <div>
+            <h2 class="d-inline-block">Projects</h2>
+            <a class="badge badge-success align-text-top" href="{% url 'proj_create'%}">Create</a>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-sm table-hover">
+            <tr>
+                <th>Name</th>
+                <th>Organization</th>
+                <th>Systems</th>
+                <th>Poc</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+            </tr>
+            {% for proj in object_list %}
+            <tr>
+                <td>
+                    <div>
+                    <h6 class="d-inline-block"><a href="{% url 'proj_detail' pk=proj.pk %}">{{ proj.name }}</a></h6>
+                    <a class="badge badge-warning align-text-top" href="{% url 'proj_edit' pk=proj.pk %}">Edit</a>
+                    <a class="badge badge-danger align-text-top"href="{% url 'proj_delete' pk=proj.pk %}">Delete</a>
+                    </div>
+                </td>
+                <td>{{ proj.org_name }}</td>
+                <td>{{ proj.system_set.all.count}}</td>
+                <td>
+                {% if  proj.poc_set.all %}
+                    {% for poc in proj.poc_set.all %}
+                {{ poc }},
+                    {% endfor %}
+                {% else %}
+                <a class="badge badge-success align-text-top" href="{% url 'proj_create' %}">Create</a>
+                {% endif %}
+                </td>
+                <td>{{ proj.init_date}}</td>
+                <td>{{ proj.end_date}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</section>
+{% endblock content %}

@@ -1,0 +1,108 @@
+{% extends parent_template|default:'base.html' %}
+
+{% block content %}
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div>
+                <h2 class="d-inline-block">{{ port }}</h2>
+                <a class="badge badge-warning align-text-top" href="{% url 'port_edit' pk=port.pk %}">Edit</a>
+                <a class="badge badge-danger align-text-top"href="{% url 'port_delete' pk=port.pk %}">Delete</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Info</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><b>Protocol:</b> {{ port.get_protocol_text }}</li>
+                            <li class="list-group-item"><b>Number:</b> {{ port.number }}</li>
+                            <li class="list-group-item"><b>Service Name:</b> {{ port.service_name }}</li>
+                            <li class="list-group-item"><b>Version:</b> {{ port.version }}</li>
+                            <li class="list-group-item"><b>Is Web Application:</b> {{ port.is_web_app }}</li>
+                        </ul>
+                    </div>
+                </div>
+                {% if port.is_web_app %}
+                <br>
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="d-inline-block">Web Applications</h5>  <a class="badge badge-success align-text-top" href="{% url 'webapp_create' %}">Create</a>
+                    </div>
+                    <div class="card-body">
+                    {% if port.webapp_set.all %}
+                        <table class="card-table table table-sm table-hover">
+                            <tr>
+                                <th>Name</th>
+                                <th>Version</th>
+                                <th>Language</th>
+                                <th>Framework</th>
+                                <th>Root URL</th>
+                                <th>Web Pages</th>
+                            </tr>
+                            {% for webapp in port.webapp_set.all %}
+                            <tr>
+                                <td>
+                                <a href="{% url 'webapp_detail' pk=webapp.pk %}">{{ webapp.name }}</a>
+                                <a class="badge badge-warning align-text-top" href="{% url 'webapp_edit' pk=webapp.pk %}">Edit</a>
+                                <a class="badge badge-danger align-text-top" href="{% url 'webapp_delete' pk=webapp.pk %}">Delete</a>
+                                </td>
+                                <td>{{ webapp.version }}</td>
+                                <td>{{ webapp.programing_lang }}</td>
+                                <td>{{ webapp.programing_framework }}</td>
+                                <td>{{ webapp.root_url }}</td>
+                                <td>{{ webapp.webpage_set.all|length }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+                <br>
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Comments</h5>
+                    </div>
+                    <div class="card-body">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="d-inline-block">Vulnerabilities</h5> <a class="badge badge-success align-text-top" href="{% url 'vuln_create' %}">Create</a>
+                    </div>
+                    <div class="card-body">
+                    {% if port.vuln_set.all %}
+                        <table class="card-table table table-sm table-hover">
+                            <tr>
+                                <th>Title</th>
+                                <th>CVE</th>
+                                <th>Risk</th>
+                                <th>Score</th>
+                            </tr>
+                            {% for vuln in port.vuln_set.all %}
+                            <tr>    
+                                <td>
+                                <a href="{% url 'vuln_detail' pk=vuln.pk %}">{{ vuln.title }}</a>
+                                <a class="badge badge-warning align-text-top" href="{% url 'vuln_edit' pk=vuln.pk %}">Edit</a>
+                                <a class="badge badge-danger align-text-top" href="{% url 'vuln_delete' pk=vuln.pk %}">Delete</a>
+                                </td>
+                                <td>{{ vuln.cve }}</td>
+                                <td>{{ vuln.risk }}</td>
+                                <td>{{ vuln.score }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
