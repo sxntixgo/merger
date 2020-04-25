@@ -12,7 +12,7 @@ Finally, merger tackles the problem of reporting by automatically producing a re
 
 ***Important:** Merger has been desiged for and tested in Kali LInux 2020.2*
 
-Installation instructions can be found at [INSTALL.md](install.md)
+Installation instructions can be found at [INSTALL.md](INSTALL.md)
 
 ## Features
 
