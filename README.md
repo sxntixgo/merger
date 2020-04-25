@@ -38,7 +38,7 @@ Please see projects to see features/bug fixes in the works.
 
 ## Bugs
 
-Did you find a bug? Please create an issue.
+Did you find a bug? Please create an [issue](https://github.com/sxntixgo/merger/issues).
 
 ## License
 
