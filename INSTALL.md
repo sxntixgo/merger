@@ -79,6 +79,15 @@ Migrate
 python merger/manage.py migrate --settings=merger.settings.local
 ```
 
+### Create `media` directories
+
+Create media directories with the following commands:
+
+```bash
+mkdir -p merger/media/reports
+mkdir -p merger/media/uploads
+```
+
 ## Run
 
 ### Activate your virtual environment
