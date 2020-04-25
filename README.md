@@ -1,98 +1,60 @@
-# merger
-**Important:** Merger has been desiged for and tested in Kali LInux 2020.1
+# Merger
 
-## Preparations
-In order to install merger, you need to clone this repository and make sure you have all the system dependencies installed.
+## About
 
-### System dependences
+merger is an open-source web application that (1) organizes and consolidate all the intermediate data produced during a security assessment or penetration test, and (2) generates a report based on such data and predefined templates. 
 
-Before installing make sure you have the following packages installed:
+This web application employs different objects (Systems, Ports, Web Applications, Webpages, Vulnerabilities, etc.) and links them based on their relationships. These objects are organized in a tree data structure, following a general-to-detail methodology. For example a System might have Vulnerabilities and Ports, which can have Web Applications with additional Vulnerabilities. Consequently, all the data from engagements is located in a single place, easily accessible, and organized in an systematic way.
 
-```bash
-sudo apt-get update
-sudo apt-get install git python3 python3-pip python3-venv python3-dev libpq-dev postgresql openssl -y
-sudo pip3 install virtualenv
-```
-
-### Cloning
-
-The following command will clone merger:
-
-```bash
-git clone https://github.com/sxntixgo/merger.git
-```
+Finally, merger tackles the problem of reporting by automatically producing a report using the information collected and predefined templates. This way, analyst, engineers, and/or researchers can focus more on security findings and less in paperwork.
 
 ## Install
-The following are the instructions to install merger in Kali Linux 2020.1
 
-### Create and activate virtual environment
+***Important:** Merger has been desiged for and tested in Kali LInux 2020.1*
 
-Activate the virtual environment with the following commands
+Installation instructions can be found at [INSTALL.md](install.md)
 
-```bash
-cd merger
-virtualenv venv
-source venv/bin/activate
-```
+## Features
 
-### Install merger dependencies
+This is the list of current features:
 
-The following command will install the requirements for merger:
+* Tree data structure to organize objects: Project, Point of Contact, Systems, Vulnerabilities, Attachments, Apps, Ports, Web Applications, Web Pages.
+* Object linking based on their relationships
+* Report generation based on objects and templates
+* Report Templates
 
-```bash
-pip install -r merger/requirements.txt
-```
+### Future features
 
-### Setup the dababase
+This is the list of features on the pipeline (not in any specific order):
 
-Generate keys for the web application and the dabatase with:
+* Docker image, to allow easy setup
+* Users, groups and permissions, to allow collaboration,
+* Improvements to the web interface,
+* Tests
+* Import from security tools (nmap and nessus),
+* Web API.
 
-```bash
-SECRET_KEY=$(openssl rand -base64 32)
-DB_SECRET=$(openssl rand -base64 32)
-```
+Please see projects to see features/bug fixes in the works.
 
-**Important:** update `merger/merger/settings/local.py` with these two keys.
+## Bugs
 
-Then, create the user and database in postgres:
+Did you find a bug? Please create an issue.
 
-```bash
-sudo service postgresql start
-sudo -u postgres psql -c "CREATE DATABASE merger;"
-sudo -u postgres psql -c "CREATE USER merger WITH PASSWORD '"$DB_SECRET"';"
-sudo -u postgres psql -c "ALTER ROLE merger SET client_encoding TO 'utf8';"
-sudo -u postgres psql -c "ALTER ROLE merger SET default_transaction_isolation TO 'read committed';"
-sudo -u postgres psql -c "ALTER ROLE merger SET timezone TO 'UTC';"
-```
+## License
 
-### Make migrations and migrate
+This project is MIT license.
 
-Make django migrations with the following command:
+## Libraries and Dependencies
 
-```bash
-python merger/manage.py makemigrations main --settings=merger.settings.local
-```
+* [Bootstrap 4](https://getbootstrap.com)
+* [Django](https://www.djangoproject.com/)
+* [django-crispy-forms](https://github.com/django-crispy-forms/django-crispy-forms)
+* [django-phonenumber-field](https://github.com/stefanfoulis/django-phonenumber-field)
+* [matplotlib](https://matplotlib.org/)
+* [psycopg2](https://www.psycopg.org/)
+* [python-docx](https://python-docx.readthedocs.io/en/latest/)
 
-Migrate
 
-```bash
-python merger/manage.py migrate --settings=merger.settings.local
-```
 
-## Run
 
-### Activate your virtual environment
-If it is not activated, activate your virtual environment with:
-
-```bash
-cd merger
-source venv/bin/activate
-```
-
-### Run the web server
-```bash
-python merger/manage.py runserver --settings=merger.settings.local
-```
-
-### Access merger
-By default the merger will run at http://127.0.0.1:8080
+    

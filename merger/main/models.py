@@ -4,6 +4,13 @@ from django.urls import reverse
 from phonenumber_field.modelfields import PhoneNumberField
 
 
+RISK = (
+    (0, 'Info'),  
+    (1, 'Low'),
+    (2, 'Medium'),
+    (3, 'High'),
+    (4, 'Critical'),
+)
 
 class App(models.Model):
 
@@ -38,19 +45,10 @@ class Attach(models.Model):
 
 class Vuln(models.Model):
 
-    RISK = (
-        (0, 'Info'),
-        (1, 'Low'),
-        (2, 'Medium'),
-        (3, 'High'),
-        (4, 'Critical'),
-    )
-
     title = models.CharField(max_length=50)
     cve = models.CharField(max_length=20, null=True)
     score = models.FloatField()
     risk = models.IntegerField(choices=RISK, default=0)
-    comments = models.TextField(blank=True)
     description = models.TextField(blank=True)
     evidence = models.TextField(blank=True)
     solution = models.TextField(blank=True)
@@ -59,12 +57,17 @@ class Vuln(models.Model):
     webapp = models.ForeignKey('WebApp', on_delete=models.SET_NULL, null=True, blank=True)
     webpage = models.ForeignKey('WebPage', on_delete=models.SET_NULL, null=True, blank=True)
     app = models.ForeignKey('App', on_delete=models.SET_NULL, null=True, blank=True)
+    proj = models.ForeignKey('Proj', on_delete=models.SET_NULL, null=True, blank=True)
+    comments = models.TextField(blank=True)
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse('vuln_detail', kwargs={'pk': self.pk})
+
+    class Meta:
+        ordering = ['-risk']
 
 class WebPage(models.Model):
 
