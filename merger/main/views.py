@@ -384,6 +384,7 @@ class VulnCreate(SuccessUrlMixin, SuccessMessageMixin, CreateView):
             initial['app'] = self.request.session['app']['pk']
         elif self.request.session['sys']:
             initial['sys'] = self.request.session['sys']['pk']
+        initial['proj'] = self.request.session['proj']['pk']
         return initial
 
 
@@ -395,7 +396,6 @@ class VulnDelete(SuccessUrlMixin, DeleteView):
 # https://stackoverflow.com/a/42656041
     def delete(self, request, *args, **kwargs):
         obj = self.get_object()
-        print(obj)
         messages.success(self.request, self.success_message % obj.__dict__)
         return super(VulnDelete, self).delete(request, *args, **kwargs)
 
