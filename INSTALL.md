@@ -23,7 +23,7 @@ git clone https://github.com/sxntixgo/merger.git
 ```
 
 ## Install
-The following are the instructions to install merger in Kali Linux 2020.1
+The following are the instructions to install merger in Kali Linux 2020.2
 
 ### Create and activate virtual environment
 
