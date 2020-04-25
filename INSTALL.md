@@ -70,7 +70,7 @@ sudo -u postgres psql -c "ALTER ROLE merger SET timezone TO 'UTC';"
 Make django migrations with the following command:
 
 ```bash
-python merger/manage.py makemigrations --settings=merger.settings.local
+python merger/manage.py makemigrations main reports --settings=merger.settings.local
 ```
 
 Migrate
