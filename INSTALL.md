@@ -1,5 +1,5 @@
 # merger
-***Important:** Merger has been desiged for and tested in Kali LInux 2020.1*
+***Important:** Merger has been desiged for and tested in Kali LInux 2020.2*
 
 ## Preparations
 In order to install merger, you need to clone this repository and make sure you have all the system dependencies installed.
