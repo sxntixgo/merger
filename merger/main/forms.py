@@ -93,6 +93,7 @@ class VulnForm(ModelForm):
         self.fields['port'].widget = HiddenInput()
         self.fields['webapp'].widget = HiddenInput()
         self.fields['webpage'].widget = HiddenInput()
+        self.fields['proj'].widget = HiddenInput()
 
 
 class WebAppForm(ModelForm):
