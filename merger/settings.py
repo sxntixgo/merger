@@ -23,6 +23,7 @@ ALLOWED_HOSTS = ['*']
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ['WEB_PASSWORD']
 DB_PASSWORD = os.environ['DB_PASSWORD']
+DB_ADDRESS = os.environ['DB_ADDRESS']
 
 # Application definition
 
@@ -80,7 +81,7 @@ DATABASES = {
         'NAME': 'merger',
         'USER': 'merger',
         'PASSWORD': DB_PASSWORD,
-        'HOST': 'db',
+        'HOST': DB_ADDRESS,
         'PORT': 5432,
     }
 }

@@ -1,20 +1,57 @@
 # merger
 ***Important:** Merger has been desiged for and tested in Kali LInux 2020.2*
 
-## Preparations
+## Docker
+
+Docker install is straight forward as it automatically install all the requirements.
+
+### Preparations
+
+Install docker using this tutorial: https://medium.com/@airman604/installing-docker-in-kali-linux-2017-1-fbaa4d1447fe
+
+Clone the repository with:
+
+```bash
+git --depth 1 clone https://github.com/sxntixgo/merger.git
+```
+
+***Note:** we use `depth -1` to clone the lastest version of merger*
+
+### Generate `.env` file
+
+The `.env` file must contain the password for the DB and the Web application. You can generate it with
+
+```bash
+python3 setup.py
+```
+
+### Build the images
+
+To build the images, execute:
+
+```bash
+docker-compose up
+```
+
+### Access the application
+
+Open a browser and go to http://0.0.0.0:8080
+
+## Virtual Environment
+
+### Preparations
 In order to install merger, you need to clone this repository and make sure you have all the system dependencies installed.
 
-### System dependences
+#### System dependences
 
 Before installing make sure you have the following packages installed:
 
 ```bash
 sudo apt-get update
 sudo apt-get install git python3 python3-pip python3-venv python3-dev libpq-dev postgresql openssl -y
-sudo pip3 install virtualenv
 ```
 
-### Cloning
+#### Cloning
 
 The following command will clone merger:
 
@@ -22,75 +59,71 @@ The following command will clone merger:
 git clone https://github.com/sxntixgo/merger.git
 ```
 
-## Install
+### Install
 The following are the instructions to install merger in Kali Linux 2020.2
 
-### Create and activate virtual environment
+#### Create and activate virtual environment
 
 Activate the virtual environment with the following commands
 
 ```bash
 cd merger
-virtualenv venv
+python3 -m venv venv
 source venv/bin/activate
 ```
 
-### Install merger dependencies
+#### Install merger dependencies
 
 The following command will install the requirements for merger:
 
 ```bash
-pip install -r merger/requirements.txt
+pip install --upgrade pip setuptools wheel
+pip install -r requirements.txt
 ```
 
-### Setup the dababase
+#### Setup the dababase
 
-Generate keys for the web application and the dabatase with:
+Generate and export to environment passwords for the web application and the dabatase with:
 
 ```bash
-SECRET_KEY=$(openssl rand -base64 32)
-DB_SECRET=$(openssl rand -base64 32)
+python3 setup.py
+for i in `cat .env`; do export $i; done
 ```
+This will generate an `.env` file containing the passwords. Instead of using these commands, you can set the environment variables `DB_PASSWORD` and `WEB_PASSWORD`.
 
-***Important:** update `merger/merger/settings/local.py` with these two keys.*
+***Important:** After deactivating your virtual environment, unset `DB_PASSWORD` and `WEB_PASSWORD`.*
 
 Then, create the user and database in postgres:
 
 ```bash
 sudo service postgresql start
 sudo -u postgres psql -c "CREATE DATABASE merger;"
-sudo -u postgres psql -c "CREATE USER merger WITH PASSWORD '"$DB_SECRET"';"
+sudo -u postgres psql -c "CREATE USER merger WITH PASSWORD '"$DB_PASSWORD"';"
 sudo -u postgres psql -c "ALTER ROLE merger SET client_encoding TO 'utf8';"
 sudo -u postgres psql -c "ALTER ROLE merger SET default_transaction_isolation TO 'read committed';"
 sudo -u postgres psql -c "ALTER ROLE merger SET timezone TO 'UTC';"
 ```
 
-### Make migrations and migrate
+#### Migrate the database
 
-Make django migrations with the following command:
-
-```bash
-python merger/manage.py makemigrations main reports --settings=merger.settings.local
-```
-
-Migrate
+Migrate changes to the database
 
 ```bash
-python merger/manage.py migrate --settings=merger.settings.local
+python manage.py migrate
 ```
 
-### Create `media` directories
+#### Create `media` directories
 
 Create media directories with the following commands:
 
 ```bash
-mkdir -p merger/media/reports
-mkdir -p merger/media/uploads
+mkdir -p media/reports
+mkdir -p media/uploads
 ```
 
-## Run
+### Run
 
-### Activate your virtual environment
+#### Activate your virtual environment
 If it is not activated, activate your virtual environment with:
 
 ```bash
@@ -98,10 +131,14 @@ cd merger
 source venv/bin/activate
 ```
 
-### Run the web server
+#### Run the web server
+
+The web server will run with:
+
 ```bash
-python merger/manage.py runserver --settings=merger.settings.local
+python manage.py runserver
 ```
 
-### Access merger
+#### Access merger
+
 By default the merger will run at http://127.0.0.1:8080
