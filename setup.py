@@ -21,7 +21,7 @@ def main():
         sys.exit(2)
     
 
-    for a, o in opts:
+    for o, a in opts:
         if o in ('-d', '-v'):
             dictionary = string.ascii_letters + string.digits + string.punctuation
             db_pass = ''.join(secrets.choice(dictionary) for i in range(64))
