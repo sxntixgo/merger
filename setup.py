@@ -4,6 +4,7 @@ import getopt
 import secrets
 import string
 import sys
+import os
 
 def usage():
     print('Usage: %s [-v]' % sys.argv[0])
@@ -30,9 +31,12 @@ def main():
         if opts:
             for o, a in opts:
                 if o == '-v':
-                        f.write('DB_ADDRESS=localhost' + '\n')
+                    f.write('DB_ADDRESS=localhost' + '\n')
+                    print('for i in `cat .env`; do export $i; done')
         else:
             f.write('DB_ADDRESS=db' + '\n')
+
+    os.makedirs('merger', 'merger/reports', 'media/uploads')
                     
 
 if __name__ == "__main__":
