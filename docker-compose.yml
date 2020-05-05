@@ -17,5 +17,6 @@ services:
     environment:
       - DB_PASSWORD=${DB_PASSWORD}
       - WEB_PASSWORD=${WEB_PASSWORD}
+      - DB_ADDRESS=${DB_ADDRESS}
     depends_on:
       - db

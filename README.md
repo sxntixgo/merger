@@ -15,7 +15,7 @@ Finally, merger tackles the problem of reporting by automatically producing a re
 Install using docker:
 
 ```bash
-git --depth 1 clone https://github.com/sxntixgo/merger.git
+git clone --depth 1 https://github.com/sxntixgo/merger.git
 cd merger
 python3 setup.py -d
 docker-compose up

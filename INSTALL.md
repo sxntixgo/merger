@@ -7,12 +7,21 @@ Docker install is straight forward as it automatically install all the requireme
 
 ### Preparations
 
+Install the dependencies with:
+
+```bash
+sudo apt-get update
+sudo apt-get install curl python3 -y
+```
+
 Install docker using this tutorial: https://medium.com/@airman604/installing-docker-in-kali-linux-2017-1-fbaa4d1447fe
+
+Install `docker-compose` using this tutorial: https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-debian-10
 
 Clone the repository with:
 
 ```bash
-git --depth 1 clone https://github.com/sxntixgo/merger.git
+git clone --depth 1 https://github.com/sxntixgo/merger.git
 ```
 
 ***Note:** we use `depth -1` to clone the lastest version of merger*
@@ -22,12 +31,13 @@ git --depth 1 clone https://github.com/sxntixgo/merger.git
 The `.env` file must contain the password for the DB and the Web application. You can generate it with
 
 ```bash
+cd merger
 python3 setup.py -d
 ```
 
-### Build the images
+### Build and run the images
 
-To build the images, execute:
+To build and run the images, execute (you might need use sudo):
 
 ```bash
 docker-compose up
