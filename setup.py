@@ -27,11 +27,13 @@ def main():
     with open('.env', 'w') as f:
         f.write('DB_PASSWORD=' + db_pass + '\n')
         f.write('WEB_PASSWORD=' + web_pass + '\n')
-        for o, a in opts:
-            if o == '-v':
-                    f.write('DB_ADDRESS=localhost' + '\n')
-            else:
-                    f.write('DB_ADDRESS=db' + '\n')
+        if opts:
+            for o, a in opts:
+                if o == '-v':
+                        f.write('DB_ADDRESS=localhost' + '\n')
+        else:
+            f.write('DB_ADDRESS=db' + '\n')
+                    
 
 if __name__ == "__main__":
     main()
