@@ -19,8 +19,9 @@ git clone --depth 1 https://github.com/sxntixgo/merger.git
 cd merger
 python3 setup.py
 docker-compose up
-firefox http://0.0.0.0:8080
 ```
+
+Then, open `http://0.0.0.0:8080` in your browser
 
 For detailed installation instructions can be found at [INSTALL.md](INSTALL.md)
 

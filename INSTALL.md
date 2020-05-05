@@ -26,9 +26,9 @@ git clone --depth 1 https://github.com/sxntixgo/merger.git
 
 ***Note:** we use `depth -1` to clone the lastest version of merger*
 
-### Generate `.env` file
+### Generate `.env` file and `media` directory
 
-The `.env` file must contain the password for the DB and the Web application. You can generate it with
+The `.env` file must contain the password for the DB and the Web application. The `media` directory contains two more directories: `reports` and `uploads`. You can generate all of them with:
 
 ```bash
 cd merger
@@ -91,19 +91,22 @@ pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
 ```
 
-#### Setup the dababase
+### Generate `.env` file and `media` directory
 
-Generate and export to environment passwords for the web application and the dabatase with:
+The `.env` file must contain the password for the DB and the Web application. The `media` directory contains two more directories: `reports` and `uploads`. You can generate all of them with:
 
 ```bash
 python3 setup.py -v
 for i in `cat .env`; do export $i; done
 ```
-This will generate an `.env` file containing the passwords. Instead of using these commands, you can set the environment variables `DB_PASSWORD` and `WEB_PASSWORD`.
+
+Instead of using these commands, you can set the environment variables `DB_PASSWORD`, `WEB_PASSWORD`, and `DB_ADDRESS`.
 
 ***Important:** After deactivating your virtual environment, unset `DB_PASSWORD` and `WEB_PASSWORD`.*
 
-Then, create the user and database in postgres:
+#### Setup the dababase
+
+Create the user and database in postgres:
 
 ```bash
 sudo service postgresql start
@@ -120,15 +123,6 @@ Migrate changes to the database
 
 ```bash
 python manage.py migrate
-```
-
-#### Create `media` directories
-
-Create media directories with the following commands:
-
-```bash
-mkdir -p media/reports
-mkdir -p media/uploads
 ```
 
 ### Run
