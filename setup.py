@@ -36,7 +36,8 @@ def main():
         else:
             f.write('DB_ADDRESS=db' + '\n')
 
-    os.makedirs('merger', 'merger/reports', 'media/uploads')
+    os.makedirs('merger/reports')
+    os.makedirs('media/uploads')
                     
 
 if __name__ == "__main__":
