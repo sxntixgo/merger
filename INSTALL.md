@@ -32,7 +32,7 @@ The `.env` file must contain the password for the DB and the Web application. Yo
 
 ```bash
 cd merger
-python3 setup.py -d
+python3 setup.py
 ```
 
 ### Build and run the images
