@@ -17,7 +17,7 @@ Install using docker:
 ```bash
 git clone --depth 1 https://github.com/sxntixgo/merger.git
 cd merger
-python3 setup.py -d
+python3 setup.py
 docker-compose up
 firefox http://0.0.0.0:8080
 ```
