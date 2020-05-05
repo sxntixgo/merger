@@ -22,7 +22,7 @@ git --depth 1 clone https://github.com/sxntixgo/merger.git
 The `.env` file must contain the password for the DB and the Web application. You can generate it with
 
 ```bash
-python3 setup.py
+python3 setup.py -d
 ```
 
 ### Build the images
@@ -86,7 +86,7 @@ pip install -r requirements.txt
 Generate and export to environment passwords for the web application and the dabatase with:
 
 ```bash
-python3 setup.py
+python3 setup.py -v
 for i in `cat .env`; do export $i; done
 ```
 This will generate an `.env` file containing the passwords. Instead of using these commands, you can set the environment variables `DB_PASSWORD` and `WEB_PASSWORD`.
