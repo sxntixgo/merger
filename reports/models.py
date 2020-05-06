@@ -93,7 +93,7 @@ class ReportTemplate(models.Model):
     method_text = models.TextField(blank=True)
     conc_text = models.TextField(blank=True)
 
-    title_font = models.CharField(max_length=50, default='Dooid Serif')
+    title_font = models.CharField(max_length=50, default='Droid Serif')
     title_size = models.IntegerField(default=26)
     title_bold = models.BooleanField(default=True)
     title_italic = models.BooleanField(default=False)
