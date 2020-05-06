@@ -10,28 +10,39 @@ Finally, merger tackles the problem of reporting by automatically producing a re
 
 ## Install
 
-***Important:** Merger has been desiged for and tested in Kali LInux 2020.2*
+***Important:** Merger has been desiged for and tested in Kali Linux 2020.2*
 
-Installation instructions can be found at [INSTALL.md](INSTALL.md)
+Install using docker:
+
+```bash
+git clone --depth 1 https://github.com/sxntixgo/merger.git
+cd merger
+python3 setup.py
+docker-compose up
+```
+
+Then, open `http://0.0.0.0:8080` in your browser
+
+For detailed installation instructions can be found at [INSTALL.md](INSTALL.md)
 
 ## Features
 
 This is the list of current features:
 
-* Tree data structure to organize objects: Project, Point of Contact, Systems, Vulnerabilities, Attachments, Apps, Ports, Web Applications, Web Pages.
-* Object linking based on their relationships
-* Report generation based on objects and templates
-* Report Templates
+* Tree data structure to organize objects: Project, Point of Contact, Systems, Vulnerabilities, Attachments, Apps, Ports, Web Applications, Web Pages,
+* Object linking based on their relationships,
+* Report generation based on objects and templates,
+* Report Templates,
+* Docker deployment.
 
 ### Future features
 
 This is the list of features on the pipeline (not in any specific order):
 
-* Docker image, to allow easy setup
 * Users, groups and permissions, to allow collaboration,
 * Improvements to the web interface,
-* Tests
-* Import from security tools (nmap and nessus),
+* Tests,
+* Import from security tools (nmap, nessus, etc),
 * Web API.
 
 Please see projects to see features/bug fixes in the works.
@@ -44,7 +55,7 @@ Did you find a bug? Please create an [issue](https://github.com/sxntixgo/merger/
 
 This project is MIT license.
 
-## Libraries and Dependencies
+## Libraries, Frameworks, and Dependencies
 
 * [Bootstrap 4](https://getbootstrap.com)
 * [Django](https://www.djangoproject.com/)
@@ -53,8 +64,4 @@ This project is MIT license.
 * [matplotlib](https://matplotlib.org/)
 * [psycopg2](https://www.psycopg.org/)
 * [python-docx](https://python-docx.readthedocs.io/en/latest/)
-
-
-
-
-    
+ 

@@ -15,6 +15,8 @@ from main.models import Attach, Proj, Vuln
 
 from os import remove
 
+from django.conf import settings
+
 # Reports
 class ReportList(ListView):
     model = Report
@@ -34,7 +36,7 @@ class ReportList(ListView):
         return context
 
     def post(self, request):
-        path = 'merger/media/'
+        path = settings.MEDIA_ROOT + '/'
         proj_name = request.POST.get('proj_name')
         
         report = Report()
@@ -71,7 +73,6 @@ class ReportTemplateCreate(SuccessMessageMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        print(ReportTemplate.COLORS)
         return context
     
 
