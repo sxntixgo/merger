@@ -61,6 +61,7 @@ This project is MIT license.
 * [Django](https://www.djangoproject.com/)
 * [django-crispy-forms](https://github.com/django-crispy-forms/django-crispy-forms)
 * [django-phonenumber-field](https://github.com/stefanfoulis/django-phonenumber-field)
+* [Feather](https://feathericons.com)
 * [matplotlib](https://matplotlib.org/)
 * [psycopg2](https://www.psycopg.org/)
 * [python-docx](https://python-docx.readthedocs.io/en/latest/)

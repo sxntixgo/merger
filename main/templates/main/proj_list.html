@@ -1,11 +1,14 @@
 {% extends parent_template|default:'base.html' %}
+{% load static %}
 
 {% block content %}
 <section class="container-fluid">
     <div class="row">
         <div>
             <h2 class="d-inline-block">Projects</h2>
-            <a class="badge badge-success align-text-top" href="{% url 'proj_create'%}">Create</a>
+            <a href="{% url 'proj_create'%}">
+                <image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create">
+            </a>
         </div>
     </div>
     <div class="row">
@@ -22,9 +25,13 @@
             <tr>
                 <td>
                     <div>
-                    <h6 class="d-inline-block"><a href="{% url 'proj_detail' pk=proj.pk %}">{{ proj.name }}</a></h6>
-                    <a class="badge badge-warning align-text-top" href="{% url 'proj_edit' pk=proj.pk %}">Edit</a>
-                    <a class="badge badge-danger align-text-top"href="{% url 'proj_delete' pk=proj.pk %}">Delete</a>
+                        <h6 class="d-inline-block"><a href="{% url 'proj_detail' pk=proj.pk %}">{{ proj.name }}</a></h6>
+                        <a href="{% url 'proj_edit' pk=proj.pk %}">
+                            <image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit">
+                        </a>
+                        <a href="{% url 'proj_delete' pk=proj.pk %}">
+                            <image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete">
+                        </a>
                     </div>
                 </td>
                 <td>{{ proj.org_name }}</td>
@@ -35,7 +42,9 @@
                 {{ poc }},
                     {% endfor %}
                 {% else %}
-                <a class="badge badge-success align-text-top" href="{% url 'proj_create' %}">Create</a>
+                <a href="{% url 'proj_create' %}">
+                    <image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create">
+                </a>
                 {% endif %}
                 </td>
                 <td>{{ proj.init_date}}</td>

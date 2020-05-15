@@ -4,11 +4,15 @@
 <section>
     <div class="container-fluid">
         <div class="row">
-                <div>
-                    <h2 class="d-inline-block">{{ poc.name }}</h2>
-                    <a class="badge badge-warning align-text-top" href="{% url 'poc_edit' pk=poc.pk %}">Edit</a>
-                    <a class="badge badge-danger align-text-top"href="{% url 'poc_delete' pk=poc.pk %}">Delete</a>
-                </div>
+            <div>
+                <h2 class="d-inline-block">{{ poc.name }}</h2>
+                <a href="{% url 'poc_edit' pk=poc.pk %}">
+                    <image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit">
+                </a>
+                <a href="{% url 'poc_delete' pk=poc.pk %}">
+                    <image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete">
+                </a>
+            </div>
         </div>
         <div class="row">
             <div class="col-sm-6">
