@@ -7,7 +7,7 @@
                     <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'proj_list' %}">Select a Project</a></li>
                 {% endif %}
                 {% if request.session.poc %}
-                    <li class="breadcrumb-item active" aria-current="page"><small>Vuln: </small><a href="{% url 'poc_detail' pk=request.session.poc.pk %}">{{ request.session.poc.str }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page"><small>PoC: </small><a href="{% url 'poc_detail' pk=request.session.poc.pk %}">{{ request.session.poc.str }}</a></li>
                 {% endif %}
                 {% if request.session.sys %}
                     <li class="breadcrumb-item active" aria-current="page"><small>System: </small><a href="{% url 'sys_detail' pk=request.session.sys.pk %}">{{ request.session.sys.str }}</a></li>

@@ -12,7 +12,7 @@
         </div>
         <div class="row">
             <div class="col-sm-6">
-                <div class="card">
+                <div class="card mb-4">
                     <div class="card-header">
                         <h5>Info</h5>
                     </div>
@@ -27,8 +27,7 @@
                     </div>
                 </div>
                 {% if port.is_web_app %}
-                <br>
-                <div class="card">
+                <div class="card mb-4">
                     <div class="card-header">
                         <h5 class="d-inline-block">Web Applications</h5>  <a class="badge badge-success align-text-top" href="{% url 'webapp_create' %}">Create</a>
                     </div>
@@ -62,8 +61,7 @@
                     </div>
                 </div>
                 {% endif %}
-                <br>
-                <div class="card">
+                <div class="card mb-4">
                     <div class="card-header">
                         <h5>Comments</h5>
                     </div>
@@ -72,7 +70,7 @@
                 </div>
             </div>
             <div class="col-sm-6">
-                <div class="card">
+                <div class="card mb-4">
                     <div class="card-header">
                         <h5 class="d-inline-block">Vulnerabilities</h5> <a class="badge badge-success align-text-top" href="{% url 'vuln_create' %}">Create</a>
                     </div>
