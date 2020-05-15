@@ -31,15 +31,15 @@
 {% include 'breadcrumb.html' %}
         <div class="container-fluid">
         {% if messages %}
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <div class="alert alert-success alert-dismissible fade show text-center" style="position: absolute; top: 2px; left: 0; right: 0; width: 60%; margin: auto; z-index: 999;" role="alert">
             {% for message in messages %}
                 {{ message }}
             {% endfor %}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            {% endif %}
+        {% endif %}
         </div>
         <div class="container-fluid">
             {% block content %}
