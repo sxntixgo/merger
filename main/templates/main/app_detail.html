@@ -1,4 +1,5 @@
 {% extends parent_template|default:'base.html' %}
+{% load static %}
 
 {% block content %}
 <section>
@@ -6,8 +7,12 @@
         <div class="row">
             <div>
                 <h2 class="d-inline-block">{{ app }}</h2>
-                <a class="badge badge-warning align-text-top" href="{% url 'app_edit' pk=app.pk %}">Edit</a>
-                <a class="badge badge-danger align-text-top"href="{% url 'app_delete' pk=app.pk %}">Delete</a>
+                <a href="{% url 'app_edit' pk=app.pk %}">
+                    <image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit">
+                </a>
+                <a href="{% url 'app_delete' pk=app.pk %}">
+                    <image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete">
+                </a>
             </div>
         </div>
         <div class="row">
@@ -34,7 +39,10 @@
             <div class="col-sm-6">
                 <div class="card mb-4">
                     <div class="card-header">
-                        <h5 class="d-inline-block">Vulnerabilities</h5> <a class="badge badge-success align-text-top" href="{% url 'vuln_create' %}">Create</a>
+                        <h5 class="d-inline-block">Vulnerabilities</h5>
+                        <a href="{% url 'vuln_create' %}">
+                            <image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create">
+                        </a>
                     </div>
                     <div class="card-body">
                     {% if app.vuln_set.all %}
@@ -48,9 +56,13 @@
                             {% for vuln in app.vuln_set.all %}
                             <tr>    
                                 <td>
-                                <a href="{% url 'vuln_detail' pk=vuln.pk %}">{{ vuln.title }}</a>
-                                <a class="badge badge-warning align-text-top" href="{% url 'vuln_edit' pk=vuln.pk %}">Edit</a>
-                                <a class="badge badge-danger align-text-top" href="{% url 'vuln_delete' pk=vuln.pk %}">Delete</a>
+                                    <a href="{% url 'vuln_detail' pk=vuln.pk %}">{{ vuln.title }}</a>
+                                    <a href="{% url 'vuln_edit' pk=vuln.pk %}">
+                                        <image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit">
+                                    </a>
+                                    <a href="{% url 'vuln_delete' pk=vuln.pk %}">
+                                        <image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete">
+                                    </a>
                                 </td>
                                 <td>{{ vuln.cve }}</td>
                                 <td>{{ vuln.risk }}</td>
