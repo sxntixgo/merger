@@ -1,5 +1,4 @@
-from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib import messages
+from .utils import SuccessMessageMixin
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView, View
@@ -31,13 +30,6 @@ class ProjDelete(SuccessMessageMixin, DeleteView):
     model = Proj
     success_url = reverse_lazy('proj_list')
     success_message = 'Project %(name)s deleted.'
-
-# It seems SuccessMessageMixin is not implemented for DeleteView
-# https://stackoverflow.com/a/42656041
-    def delete(self, request, *args, **kwargs):
-        obj = self.get_object()
-        messages.success(self.request, self.success_message % obj.__dict__)
-        return super(ProjDelete, self).delete(request, *args, **kwargs)
 
 
 class ProjDetail(DetailView):
@@ -97,13 +89,6 @@ class PocDelete(SuccessUrlMixin, SuccessMessageMixin, DeleteView):
     model = Poc
     success_message = 'Point of contact %(name)s deleted.'
 
-# It seems SuccessMessageMixin is not implemented for DeleteView
-# https://stackoverflow.com/a/42656041
-    def delete(self, request, *args, **kwargs):
-        obj = self.get_object()
-        messages.success(self.request, self.success_message % obj.__dict__)
-        return super(PocDelete, self).delete(request, *args, **kwargs)
-
 
 class PocDetail(DetailView):
     model = Poc
@@ -146,13 +131,6 @@ class DomainDelete(SuccessUrlMixin, SuccessMessageMixin, DeleteView):
     model = Domain
     success_message = 'Domain %(domain)s deleted.'
 
-# It seems SuccessMessageMixin is not implemented for DeleteView
-# https://stackoverflow.com/a/42656041
-    def delete(self, request, *args, **kwargs):
-        obj = self.get_object()
-        messages.success(self.request, self.success_message % obj.__dict__)
-        return super(DomainDelete, self).delete(request, *args, **kwargs)
-
     def get(self, *args, **kwargs):
         return self.post(*args, **kwargs)
 
@@ -174,13 +152,6 @@ class NetAddrDelete(SuccessUrlMixin, SuccessMessageMixin, DeleteView):
     model = NetAddr
     success_message = 'Network Address %(net_address)s deleted.'
 
-# It seems SuccessMessageMixin is not implemented for DeleteView
-# https://stackoverflow.com/a/42656041
-    def delete(self, request, *args, **kwargs):
-        obj = self.get_object()
-        messages.success(self.request, self.success_message % obj.__dict__)
-        return super(NetAddrDelete, self).delete(request, *args, **kwargs)
-
     def get(self, *args, **kwargs):
         return self.post(*args, **kwargs)
 
@@ -196,16 +167,9 @@ class SysCreate(SuccessUrlMixin, SuccessMessageMixin, CreateView):
         return initial
 
 
-class SysDelete(SuccessUrlMixin, DeleteView):
+class SysDelete(SuccessUrlMixin, SuccessMessageMixin, DeleteView):
     model = Sys
     success_message = 'System %(ip_address)s deleted.'
-
-# It seems SuccessMessageMixin is not implemented for DeleteView
-# https://stackoverflow.com/a/42656041
-    def delete(self, request, *args, **kwargs):
-        obj = self.get_object()
-        messages.success(self.request, self.success_message % obj.__dict__)
-        return super(SysDelete, self).delete(request, *args, **kwargs)
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -248,16 +212,10 @@ class PortCreate(SuccessUrlMixin, SuccessMessageMixin, CreateView):
         return initial
 
 
-class PortDelete(SuccessUrlMixin, DeleteView):
+class PortDelete(SuccessUrlMixin, SuccessMessageMixin, DeleteView):
     model = Port
     success_message = 'Port %(protocol)s/%(number)s deleted.'
 
-# It seems SuccessMessageMixin is not implemented for DeleteView
-# https://stackoverflow.com/a/42656041
-    def delete(self, request, *args, **kwargs):
-        obj = self.get_object()
-        messages.success(self.request, self.success_message % obj.__dict__)
-        return super(PortDelete, self).delete(request, *args, **kwargs)
 
 class PortDetail(DetailView):
     model = Port
@@ -293,16 +251,10 @@ class WebAppCreate(SuccessUrlMixin, SuccessMessageMixin, CreateView):
         return initial
 
 
-class WebAppDelete(SuccessUrlMixin, DeleteView):
+class WebAppDelete(SuccessUrlMixin, SuccessMessageMixin, DeleteView):
     model = WebApp
     success_message = 'Webapp %(name)s deleted.'
 
-# It seems SuccessMessageMixin is not implemented for DeleteView
-# https://stackoverflow.com/a/42656041
-    def delete(self, request, *args, **kwargs):
-        obj = self.get_object()
-        messages.success(self.request, self.success_message % obj.__dict__)
-        return super(WebAppDelete, self).delete(request, *args, **kwargs)
 
 class WebAppDetail(DetailView):
     model = WebApp
@@ -337,16 +289,10 @@ class WebPageCreate(SuccessUrlMixin, SuccessMessageMixin, CreateView):
         return initial
 
 
-class WebPageDelete(SuccessUrlMixin,  DeleteView):
+class WebPageDelete(SuccessUrlMixin,  SuccessMessageMixin, DeleteView):
     model = WebPage
     success_message = 'Webpage %(path)s deleted.'
 
-# It seems SuccessMessageMixin is not implemented for DeleteView
-# https://stackoverflow.com/a/42656041
-    def delete(self, request, *args, **kwargs):
-        obj = self.get_object()
-        messages.success(self.request, self.success_message % obj.__dict__)
-        return super(WebPageDelete, self).delete(request, *args, **kwargs)
 
 class WebPageDetail(DetailView):
     model = WebPage
@@ -388,16 +334,9 @@ class VulnCreate(SuccessUrlMixin, SuccessMessageMixin, CreateView):
         return initial
 
 
-class VulnDelete(SuccessUrlMixin, DeleteView):
+class VulnDelete(SuccessUrlMixin, SuccessMessageMixin, DeleteView):
     model = Vuln
     success_message = 'Vulnerability %(title)s deleted.'
-    
-# It seems SuccessMessageMixin is not implemented for DeleteView
-# https://stackoverflow.com/a/42656041
-    def delete(self, request, *args, **kwargs):
-        obj = self.get_object()
-        messages.success(self.request, self.success_message % obj.__dict__)
-        return super(VulnDelete, self).delete(request, *args, **kwargs)
 
 
 class VulnDetail(DetailView):
@@ -432,17 +371,10 @@ class AttachCreate(SuccessUrlMixin, SuccessMessageMixin, CreateView):
         return initial
 
 
-class AttachDelete(SuccessUrlMixin, DeleteView):
+class AttachDelete(SuccessUrlMixin, SuccessMessageMixin, DeleteView):
     model = Attach
     success_message = 'Attachment %(name)s deleted.'
-    
 
-# It seems SuccessMessageMixin is not implemented for DeleteView
-# https://stackoverflow.com/a/42656041
-    def delete(self, request, *args, **kwargs):
-        obj = self.get_object()
-        messages.success(self.request, self.success_message % obj.__dict__)
-        return super(AttachDelete, self).delete(request, *args, **kwargs)
 
 
 # Apps
@@ -457,16 +389,10 @@ class AppCreate(SuccessUrlMixin, SuccessMessageMixin, CreateView):
         return initial
 
 
-class AppDelete(SuccessUrlMixin, DeleteView):
+class AppDelete(SuccessUrlMixin, SuccessMessageMixin, DeleteView):
     model = App
     success_message = 'App %(name)s deleted.'
 
-# It seems SuccessMessageMixin is not implemented for DeleteView
-# https://stackoverflow.com/a/42656041
-    def delete(self, request, *args, **kwargs):
-        obj = self.get_object()
-        messages.success(self.request, self.success_message % obj.__dict__)
-        return super(AppDelete, self).delete(request, *args, **kwargs)
 
 class AppDetail(DetailView):
     model = App

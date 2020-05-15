@@ -1,4 +1,7 @@
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin as SuccMessMixin
 from django.urls import reverse
+
 
 class SuccessUrlMixin():
     def get_success_url(self):
@@ -18,3 +21,12 @@ class SuccessUrlMixin():
             return reverse('sys_detail', kwargs={'pk':self.request.session['sys']['pk']})
         else:
             return reverse('proj_detail', kwargs={'pk':self.request.session['proj']['pk']})
+
+# It seems SuccessMessageMixin is not implemented for DeleteView
+# https://stackoverflow.com/a/42656041
+class SuccessMessageMixin(SuccMessMixin):
+    def delete(self, request, *args, **kwargs):
+        print('delete')
+        obj = self.get_object()
+        messages.success(self.request, self.success_message % obj.__dict__)
+        return super().delete(request, *args, **kwargs)
