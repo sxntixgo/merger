@@ -42,9 +42,7 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <h5 class="d-inline-block">Report Templates</h5> 
-                        <a href="{% url 'template_create' %}">
-                            <image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create">
-                        </a>
+                        <a href="{% url 'template_create' %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
                     </div>
                     <div class="card-body">
                         <table class="table-card table table-sm table-hover">
@@ -57,12 +55,8 @@
                                 <td>
                                     <div>
                                         <h6 class="d-inline-block">{{ template }}</h6>
-                                        <a href="{% url 'template_edit' pk=template.pk %}">
-                                            <image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit">
-                                        </a>
-                                        <a href="{% url 'template_delete' pk=template.pk %}">
-                                            <image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete">
-                                        </a>
+                                        <a href="{% url 'template_edit' pk=template.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
+                                        <a href="{% url 'template_delete' pk=template.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
                                     </div>
                                 </td>
                                 <td>{{ template.description }}</td>

@@ -7,12 +7,8 @@
         <div class="row">
             <div>
                 <h2 class="d-inline-block">{{ port }}</h2>
-                <a href="{% url 'port_edit' pk=port.pk %}">
-                    <image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit">
-                </a>
-                <a href="{% url 'port_delete' pk=port.pk %}">
-                    <image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete">
-                </a>
+                <a href="{% url 'port_edit' pk=port.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
+                <a href="{% url 'port_delete' pk=port.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
             </div>
         </div>
         <div class="row">
@@ -35,9 +31,7 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <h5 class="d-inline-block">Web Applications</h5>
-                        <a href="{% url 'webapp_create' %}">
-                            <image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create">
-                        </a>
+                        <a href="{% url 'webapp_create' %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
                     </div>
                     <div class="card-body">
                     {% if port.webapp_set.all %}
@@ -54,12 +48,8 @@
                             <tr>
                                 <td>
                                     <a href="{% url 'webapp_detail' pk=webapp.pk %}">{{ webapp.name }}</a>
-                                    <a href="{% url 'webapp_edit' pk=webapp.pk %}">
-                                        <image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit">
-                                    </a>
-                                    <a href="{% url 'webapp_delete' pk=webapp.pk %}">
-                                        <image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete">
-                                    </a>
+                                    <a href="{% url 'webapp_edit' pk=webapp.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
+                                    <a href="{% url 'webapp_delete' pk=webapp.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
                                 </td>
                                 <td>{{ webapp.version }}</td>
                                 <td>{{ webapp.programing_lang }}</td>
@@ -85,9 +75,7 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <h5 class="d-inline-block">Vulnerabilities</h5>
-                        <a href="{% url 'vuln_create' %}">
-                            <image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create">
-                        </a>
+                        <a href="{% url 'vuln_create' %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
                     </div>
                     <div class="card-body">
                     {% if port.vuln_set.all %}
@@ -102,12 +90,8 @@
                             <tr>    
                                 <td>
                                     <a href="{% url 'vuln_detail' pk=vuln.pk %}">{{ vuln.title }}</a>
-                                    <a href="{% url 'vuln_edit' pk=vuln.pk %}">
-                                        <image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit">
-                                    </a>
-                                    <a href="{% url 'vuln_delete' pk=vuln.pk %}">
-                                        <image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete">
-                                    </a>
+                                    <a href="{% url 'vuln_edit' pk=vuln.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
+                                    <a href="{% url 'vuln_delete' pk=vuln.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
                                 </td>
                                 <td>{{ vuln.cve }}</td>
                                 <td>{{ vuln.risk }}</td>

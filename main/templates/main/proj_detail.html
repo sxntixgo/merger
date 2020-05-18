@@ -7,12 +7,8 @@
         <div class="row">
             <div>
             <h2 class="d-inline-block">{{ proj.name }}</h2>
-                <a href="{% url 'proj_edit' pk=proj.pk %}">
-                    <image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit">
-                </a>
-                <a href="{% url 'proj_delete' pk=proj.pk %}">
-                    <image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete">
-                </a>
+                <a href="{% url 'proj_edit' pk=proj.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
+                <a href="{% url 'proj_delete' pk=proj.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
             </div>
         </div>
         <div class="row">
@@ -24,16 +20,12 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"><b>Organization:</b> {{ proj.org_name }}</li>
                         <li class="list-group-item">
-                            <a href="{% url 'domain_create' %}">
-                                <image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create">
-                            </a>
+                            <a href="{% url 'domain_create' %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
                             <b>Domains:</b> 
                         {% for domain in proj.domain_set.all %}{{ domain }} <a class="badge badge-danger align-text-top" href="{% url 'domain_delete' pk=domain.pk %}">X</a>{% if not forloop.last %}, {% endif %} {% endfor %}
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'netaddr_create' %}">
-                                <image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create">
-                            </a>
+                            <a href="{% url 'netaddr_create' %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
                             <b>Network Addresses:</b> 
                         {% for net_address in proj.netaddr_set.all %}{{ net_address }} 
                         <a class="badge badge-danger align-text-top" href="{% url 'netaddr_delete' pk=net_address.pk %}">X</a>{% if not forloop.last %}, {% endif %} {% endfor %}
@@ -46,9 +38,7 @@
                     <div class="card-header">
                         <div>
                             <h5 class="d-inline-block">Systems</h5>
-                            <a href="{% url 'sys_create' %}">
-                                <image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create">
-                            </a>
+                            <a href="{% url 'sys_create' %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
                         </div>
                     </div>
                     <div class="card-body">
@@ -65,12 +55,8 @@
                             <tr>
                                 <td>
                                     <a href="{% url 'sys_detail' pk=sys.pk %}">{{ sys.ip_address }}</a>
-                                    <a href="{% url 'sys_edit' pk=sys.pk %}">
-                                        <image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit">
-                                    </a>
-                                    <a href="{% url 'sys_delete' pk=sys.pk %}">
-                                        <image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete">
-                                    </a>
+                                    <a href="{% url 'sys_edit' pk=sys.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
+                                    <a href="{% url 'sys_delete' pk=sys.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
                                 </td>
                                 <td>{{ sys.fqdn }}</td>
                                 <td>{{ sys.os }} </td>
@@ -95,9 +81,7 @@
                 <div class="card mb-4">
                         <div class="card-header">
                             <h5 class="d-inline-block">Points of Contact</h5>
-                            <a href="{% url 'poc_create' %}">
-                                <image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create">
-                            </a>
+                            <a href="{% url 'poc_create' %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
                         </div>
                         <div class="card-body">
                         {% if proj.poc_set.all %}
@@ -112,12 +96,8 @@
                                 <tr>
                                     <td>
                                         <a href="{% url 'poc_detail' pk=poc.pk %}">{{ poc.name }}</a>
-                                        <a href="{% url 'poc_edit' pk=poc.pk %}">
-                                            <image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit">
-                                        </a>
-                                        <a href="{% url 'poc_delete' pk=poc.pk %}">
-                                            <image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete">
-                                        </a>
+                                        <a href="{% url 'poc_edit' pk=poc.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
+                                        <a href="{% url 'poc_delete' pk=poc.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
                                     </td>
                                     <td>{{ poc.role }}</td>
                                     <td>{{ poc.email }}</td>
