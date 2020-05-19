@@ -32,7 +32,7 @@ def main():
             for o, a in opts:
                 if o == '-v':
                     f.write('DB_ADDRESS=localhost' + '\n')
-                    print('for i in `cat .env`; do export $i; done')
+
         else:
             f.write('DB_ADDRESS=db' + '\n')
 

@@ -97,12 +97,7 @@ The `.env` file must contain the password for the DB and the Web application. Th
 
 ```bash
 python3 setup.py -v
-for i in `cat .env`; do export $i; done
 ```
-
-Instead of using these commands, you can set the environment variables `DB_PASSWORD`, `WEB_PASSWORD`, and `DB_ADDRESS`.
-
-***Important:** After deactivating your virtual environment, unset `DB_PASSWORD` and `WEB_PASSWORD`.*
 
 #### Setup the dababase
 
