@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -21,19 +24,9 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 # SECURITY WARNING: keep the secret key used in production secret!
-if DEBUG: # Debug forces a local environment
-    with open('.env', 'r') as f:
-        for line in f:
-            if line.split('=', 1)[0] == 'WEB_PASSWORD':
-                SECRET_KEY = line.split('=', 1)[1]
-            elif line.split('=', 1)[0] == 'DB_PASSWORD': 
-                DB_PASSWORD = line.split('=', 1)[1]
-            elif line.split('=', 1)[0] == 'DB_ADDRESS':
-                DB_ADDRESS = line.split('=', 1)[1]  
-else:
-    SECRET_KEY = os.environ['WEB_PASSWORD']
-    DB_PASSWORD = os.environ['DB_PASSWORD']
-    DB_ADDRESS = os.environ['DB_ADDRESS']
+SECRET_KEY = os.environ['WEB_PASSWORD']
+DB_PASSWORD = os.environ['DB_PASSWORD']
+DB_ADDRESS = os.environ['DB_ADDRESS']
 
 # Application definition
 
