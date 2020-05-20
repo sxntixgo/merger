@@ -36,7 +36,7 @@ class ReportList(ListView):
         return context
 
     def post(self, request):
-        path = settings.MEDIA_ROOT + '/'
+        path = f'{settings.MEDIA_ROOT}/'
         proj_name = request.POST.get('proj_name')
         
         report = Report()
