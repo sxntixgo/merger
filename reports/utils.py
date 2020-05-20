@@ -84,7 +84,7 @@ def get_donut(path, proj, template):
     ax.legend(wedges, labels, title="Risk", loc="center right", bbox_to_anchor=(1.25, 0, 0.5, 1))
 
     pyplot.setp(autotexts, size=14, weight="bold")
-    pyplot.savefig(path + 'donut.png')
+    pyplot.savefig(f'{path}donut.png')
 
 # Modified from the source
 # --- from https://github.com/python-openxml/python-docx/issues/590,
@@ -109,7 +109,7 @@ def addHeaderNumbering(document):
         for i in range(1 , index + 1):
             hStr += '{}.'.format(hNums[i])
         # ---add the numbering---
-        hx.text = hStr+ " " + hx.text
+        hx.text = f'{hStr} {hx.text}'
 
 def generate_document(request, path):
     proj_name = request.POST.get('proj_name')
@@ -122,11 +122,11 @@ def generate_document(request, path):
     for style in STYLES:
         font = document.styles[style].font
         style = style.lower().replace(' ', '_')
-        font.name = getattr(template, style + '_font')
-        font.size = Pt(getattr(template, style + '_size'))
-        font.bold = getattr(template, style + '_bold')
-        font.italic = getattr(template, style + '_italic')
-        font_color = template.COLORS[getattr(template, style + '_color')][1]
+        font.name = getattr(template, f'{style}_font')
+        font.size = Pt(getattr(template, f'{style}_size'))
+        font.bold = getattr(template, f'{style}_bold')
+        font.italic = getattr(template, f'{style}_italic')
+        font_color = template.COLORS[getattr(template, f'{style}_color')][1]
         font.color.rgb = color_to_rgb(font_color)
 
     cover = template.sec_cover
@@ -218,8 +218,8 @@ def generate_document(request, path):
             if heading == 'sec_sor':
                 # Add donut
                 get_donut(path, proj, template)
-                document.add_picture(path + 'donut.png', width=Inches(6))
-                remove(path + 'donut.png')
+                document.add_picture(f'{path}donut.png', width=Inches(6))
+                remove(f'{path}donut.png')
 
                 # Add table header
                 table = document.add_table(rows=1, cols=4)
@@ -257,7 +257,7 @@ def generate_document(request, path):
                             attachments = Attach.objects.filter(vuln=vuln).all()
                             for attachment in attachments:
                                 document.add_picture(path + str(attachment.media), width=Inches(6))
-                                document.add_paragraph('Figure' + ': ' + attachment.caption, style='Caption')
+                                document.add_paragraph(f'Figure: {attachment.caption}', style='Caption')
                         else:
                             document.add_paragraph(vuln.solution)
 
@@ -269,7 +269,8 @@ def generate_document(request, path):
     addHeaderNumbering(document)
 
     hex_chars = '0123456789abcdef'
-    document_name =  proj_name + '_report_' + ''.join(random.choice(hex_chars) for n in range(6)) + '.docx'
+    rand_str = ''.join(random.choice(hex_chars) for n in range(6))
+    document_name =  f'{proj_name}_report_{rand_str}.docx'
     document.save(path + document_name)
 
     return document_name

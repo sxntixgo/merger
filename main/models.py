@@ -125,7 +125,7 @@ class Port(models.Model):
 
         return_text = '%s/%i' % (self.get_protocol_text(), self.number)
         if self.is_web_app:
-            return_text = return_text + ' (Webapp)'
+            return_text = f'{return_text} (Webapp)'
         return return_text
 
     def get_absolute_url(self):
