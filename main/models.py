@@ -28,6 +28,7 @@ class App(models.Model):
     def get_absolute_url(self):
         return reverse('app_detail', kwargs={'pk': self.pk})
 
+
 class Attach(models.Model):
 
     media = models.FileField(upload_to='uploads/', max_length=256)
