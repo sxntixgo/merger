@@ -5,7 +5,7 @@ from django.views.generic import CreateView, DeleteView, DetailView, ListView, U
 
 from .models import App, Attach, Domain, NetAddr, Proj, Poc, Port, Sys, Vuln, WebApp, WebPage
 from .utils import SuccessUrlMixin
-from .forms import AppForm, AttachForm, DomainForm, NetAddrForm, PocForm, PortForm, SysForm, VulnForm, WebAppForm, WebPageForm
+from .forms import AppForm, AttachForm, DomainForm, NetAddrForm, PocForm, PortForm, ProjForm, SysForm, VulnForm, WebAppForm, WebPageForm
 
 class Welcome(View):
     def get(self, request):
@@ -22,8 +22,13 @@ class Welcome(View):
 # Projects
 class ProjCreate(SuccessMessageMixin, CreateView):
     model = Proj
-    fields = '__all__'
+    form_class = ProjForm
     success_message = 'Project %(name)s created.'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+    
 
 
 class ProjDelete(SuccessMessageMixin, DeleteView):
@@ -69,7 +74,7 @@ class ProjList(ListView):
 
 class ProjUpdate(SuccessMessageMixin, UpdateView):
     model = Proj
-    fields = '__all__'
+    form_class = ProjForm
     success_message = 'Project %(name)s updated.'
 
 
