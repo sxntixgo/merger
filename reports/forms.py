@@ -33,8 +33,8 @@ class ReportTemplateForm(ModelForm):
             Div(
                 Div('sec_cover', css_class='col-sm-3',),
                 Div('cover_title', 'cover_company_name', css_class='col-sm-3'),
-                Div('cover_contact_name', 'cover_contact_email', css_class='col-sm-3'), 
-                Div('cover_contact_phone_number', css_class='col-sm-3'), 
+                Div('cover_contact_name', Field('cover_contact_email', placeholder='user@domain.com'), css_class='col-sm-3'), 
+                Div(Field('cover_contact_phone_number', placeholder='+1 111 111 1111'), css_class='col-sm-3'), 
                 css_class='row',
             ),
             Div(
