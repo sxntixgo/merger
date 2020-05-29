@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.messages.views import SuccessMessageMixin
+from main.views import SuccessMessageMixin
 from django.core.files import File
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -12,6 +12,7 @@ from .forms import ReportTemplateForm
 from .models import Report, ReportTemplate
 from .utils import generate_document
 from main.models import Attach, Proj, Vuln
+from main.utils import SuccessMessageMixin
 
 from os import remove
 
@@ -53,14 +54,6 @@ class ReportDelete(SuccessMessageMixin, DeleteView):
     model = Report
     success_url = reverse_lazy('report_list')
     success_message = 'Report %(media)s deleted.'
-    
-# It seems SuccessMessageMixin is not implemented for DeleteView
-# https://stackoverflow.com/a/42656041
-    def delete(self, request, *args, **kwargs):
-        obj = self.get_object()
-        obj.media.delete()
-        messages.success(self.request, self.success_message % obj.__dict__)
-        return super().delete(request, *args, **kwargs)
 
 
 
@@ -78,16 +71,8 @@ class ReportTemplateCreate(SuccessMessageMixin, CreateView):
 
 class ReportTemplateDelete(SuccessMessageMixin, DeleteView):
     model = ReportTemplate
-    model = Proj
     success_url = reverse_lazy('report_list')
     success_message = 'Report Template %(name)s deleted.'
-
-# It seems SuccessMessageMixin is not implemented for DeleteView
-# https://stackoverflow.com/a/42656041
-    def delete(self, request, *args, **kwargs):
-        obj = self.get_object()
-        messages.success(self.request, self.success_message % obj.__dict__)
-        return super(ReportTemplateDelete, self).delete(request, *args, **kwargs)
 
 
 class ReportTemplateUpdate(SuccessMessageMixin, UpdateView):
