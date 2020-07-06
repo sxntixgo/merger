@@ -125,7 +125,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
-STTICFILES_DIR = (os.path.join(BASE_DIR, 'static'),)
+STATICFILES_DIR = (os.path.join(BASE_DIR, 'static'),)
 STATIC_URL = '/static/'
 
 # Django crispy forms
@@ -137,5 +137,5 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-# Phome number format
+# Phone number format
 PHONENUMBER_DB_FORMAT = 'INTERNATIONAL'
