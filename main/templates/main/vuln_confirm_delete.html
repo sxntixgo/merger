@@ -1,13 +1,30 @@
 {% extends parent_template|default:'base.html' %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% include 'main/breadcrumbs/vuln.html' %}
+{% endblock %}
 
 {% block content %}
 <section>
     <h2>Delete {{ vulnerability }}</h2>
-    <form action="{% url 'vuln_delete' pk=vuln.pk %}" method="post"> 
+    {% if webpage %}
+    <form action="{% url 'vuln_delete' proj_slug=webpage.webapp.port.sys.proj.slug sys_pk=webpage.webapp.port.sys.pk port_pk=webpage.webapp.port.pk webapp_pk=webpage.webapp.pk webapp_pk=webpage.webapp.pk pk=vuln.pk %}?next={% url 'webpage_detail' proj_slug=webpage.webapp.port.sys.proj.slug sys_pk=webpage.webapp.port.sys.pk port_pk=webpage.webapp.port.pk webapp_pk=webpage.webapp.pk pk=webpage.pk %}" method="post"> 
+    {% elif webapp %}
+    <form action="{% url 'vuln_delete' proj_slug=webapp.port.sys.proj.slug sys_pk=webapp.port.sys.pk port_pk=webapp.port.pk webapp_pk=webapp.pk pk=vuln.pk %}?next={% url 'webapp_detail' proj_slug=webapp.port.sys.proj.slug sys_pk=webapp.port.sys.pk port_pk=webapp.port.pk pk=webapp.pk %}" method="post">
+    {% elif port %}
+    <form action="{% url 'vuln_delete' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk port_pk=port.pk pk=vuln.pk %}?next={% url 'port_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}" method="post">
+    {% elif app %}
+    <form action="{% url 'vuln_delete' proj_slug=app.sys.proj.slug sys_pk=app.sys.pk pk=app.pk pk=vuln.pk %}?next={% url 'app_detail' proj_slug=app.sys.proj.slug sys_pk=app.sys.pk pk=app.pk %}" method="post">
+    {% elif sys %}
+    <form action="{% url 'vuln_delete' proj_slug=sys.proj.slug sys_pk=sys.pk pk=vuln.pk %}?next={% url 'sys_detail' proj_slug=sys.proj.slug pk=sys.pk %}" method="post"> 
+    {% else %}
+    <form method="post"> 
+    {% endif %}
     {% csrf_token %}
     <p>Are you sure you want to delete {{ vuln }}?</p>
     <button type="submit" class="btn btn-danger">Delete</button>
-    <a class="btn btn-success text-white" onclick="history.back()">Cancel</a>
+    <a class="btn btn-success text-white" href="{{ view.get_success_url }}">Cancel</a>
     </form>
 </section>
 {% endblock content %}

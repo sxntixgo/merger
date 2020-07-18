@@ -1,10 +1,15 @@
 {% extends parent_template|default:'base.html' %}
 {% load crispy_forms_tags %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% include 'main/breadcrumbs/netaddr.html' %}
+{% endblock %}
 
 {% block content %}
 <section>
     <h2>Create Domain</h2>
-    <form action="{% url 'netaddr_create' %}" method="post">
+    <form method="post">
     {% crispy form form.helper %}
     </form>
 </section>

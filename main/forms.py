@@ -10,7 +10,7 @@ class AppForm(ModelForm):
 
     class Meta:
         model = App
-        fields = '__all__'
+        fields = ['name', 'version', 'comments']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -23,7 +23,6 @@ class AppForm(ModelForm):
                     css_class='col-sm-6'
                 ),
                 Div(Field('comments', style='height: 124px;'), css_class='col-sm-6'),
-                Field('sys', type='hidden'),
                 css_class='row',
             ),
                 Submit('save', 'Submit', css_class='btn-success'),
@@ -35,7 +34,7 @@ class AttachForm(ModelForm):
 
     class Meta:
         model = Attach
-        fields = '__all__'
+        fields = ['media', 'name', 'caption']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -49,8 +48,6 @@ class AttachForm(ModelForm):
                     'caption',
                     css_class='col-sm-6'
                 ),
-                Field('vuln', type='hidden'),
-                Field('webpage', type='hidden'),
                 css_class='row',
             ),
                 Submit('save', 'Submit', css_class='btn-success'),
@@ -62,7 +59,7 @@ class DomainForm(ModelForm):
 
     class Meta:
         model = Domain
-        fields = '__all__'
+        fields = ['domain']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -70,7 +67,6 @@ class DomainForm(ModelForm):
         self.helper.layout = Layout(
             Div(
                 Div('domain', css_class='col-sm-6'),
-                Field('proj', type='hidden'),
                 css_class='row',
             ),
                 Submit('save', 'Submit', css_class='btn-success'),
@@ -82,7 +78,7 @@ class NetAddrForm(ModelForm):
 
     class Meta:
         model = NetAddr
-        fields = '__all__'
+        fields = ['net_address']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -90,7 +86,6 @@ class NetAddrForm(ModelForm):
         self.helper.layout = Layout(
             Div(
                 Div('net_address', css_class='col-sm-6'),
-                Field('proj', type='hidden'),
                 css_class='row',
             ),
                 Submit('save', 'Submit', css_class='btn-success'),
@@ -102,7 +97,7 @@ class PocForm(ModelForm):
 
     class Meta:
         model = Poc
-        fields = '__all__'
+        fields = ['name', 'role', 'email', 'phone', 'comments']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -115,7 +110,6 @@ class PocForm(ModelForm):
                         css_class='row'), 
                     css_class='col-sm-6'),
                 Div(Field('comments', style='height: 210px;'), css_class='col-sm-6'),
-                Field('proj', type='hidden'),
                 css_class='row',
             ),
                 Submit('save', 'Submit', css_class='btn-success'),
@@ -127,7 +121,7 @@ class PortForm(ModelForm):
     
     class Meta:
         model = Port
-        fields = '__all__'
+        fields = ['number', 'service_name', 'version', 'protocol', 'is_web_app', 'comments']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -149,7 +143,6 @@ class PortForm(ModelForm):
                     css_class='col-sm-6'
                 ),
                 Div(Field('comments', style='height: 175px;'), css_class='col-sm-6'),
-                Field('sys', type='hidden'),
                 css_class='row',
             ),
                 Submit('save', 'Submit', css_class='btn-success'),
@@ -161,7 +154,7 @@ class ProjForm(ModelForm):
 
     class Meta:
         model = Proj
-        fields = '__all__'
+        fields = ['name', 'org_name', 'init_date', 'end_date', 'comments']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -185,7 +178,7 @@ class SysForm(ModelForm):
 
     class Meta:
         model = Sys
-        fields = '__all__'
+        fields = ['ip_address', 'fqdn', 'os', 'version', 'comments']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -198,7 +191,6 @@ class SysForm(ModelForm):
                         css_class='row'), 
                     css_class='col-sm-6'),
                 Div(Field('comments', style='height: 210px;'), css_class='col-sm-6'),
-                Field('proj', type='hidden'),
                 css_class='row',
             ),
                 Submit('save', 'Submit', css_class='btn-success'),
@@ -210,7 +202,7 @@ class VulnForm(ModelForm):
     
     class Meta:
         model = Vuln
-        fields = '__all__'
+        fields = ['title', 'cve', 'score', 'risk', 'description', 'evidence', 'solution', 'comments']
 
 
     def __init__(self, *args, **kwargs):
@@ -235,12 +227,6 @@ class VulnForm(ModelForm):
                 css_class='row'
             ),
             Div(
-            Field('sys', type='hidden'),
-            Field('app', type='hidden'),
-            Field('port', type='hidden'),
-            Field('webapp', type='hidden'),
-            Field('webpage', type='hidden'),
-            Field('proj', type='hidden'),
             css_class='row'
             ),
             Submit('save', 'Submit', css_class='btn-success'),
@@ -252,7 +238,7 @@ class WebAppForm(ModelForm):
     
     class Meta:
         model = WebApp
-        fields = '__all__'
+        fields = ['name', 'version', 'programing_lang', 'programing_framework', 'root_url', 'comments']
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -274,7 +260,6 @@ class WebAppForm(ModelForm):
                     css_class='col-sm-6'
                 ),
                 Div(Field('comments', style='height: 210px;'), css_class='col-sm-6'),
-                Field('port', type='hidden'),
                 css_class='row',
             ),
                 Submit('save', 'Submit', css_class='btn-success'),
@@ -286,7 +271,7 @@ class WebPageForm(ModelForm):
     
     class Meta:
         model = WebPage
-        fields = '__all__'
+        fields = ['title', 'path', 'comments']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -295,7 +280,6 @@ class WebPageForm(ModelForm):
             Div(
                 Div('path', 'title', css_class='col-sm-6'),
                 Div(Field('comments', style='height: 124px;'), css_class='col-sm-6'),
-                Field('webapp', type='hidden'),
                 css_class='row',
             ),
                 Submit('save', 'Submit', css_class='btn-success'),

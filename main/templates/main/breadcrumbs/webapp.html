@@ -1,0 +1,15 @@
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% if port %}
+        {% breadcrumb port.sys.proj 'proj_detail' slug=port.sys.proj.slug %}
+        {% breadcrumb port.sys 'sys_detail' proj_slug=port.sys.proj.slug pk=port.sys.pk %}
+        {% breadcrumb port 'port_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}
+        {% breadcrumb '' '' %}
+    {% else %}
+        {% breadcrumb webapp.port.sys.proj 'proj_detail' slug=webapp.port.sys.proj.slug %}
+        {% breadcrumb webapp.port.sys 'sys_detail' proj_slug=webapp.port.sys.proj.slug pk=webapp.port.sys.pk %}
+        {% breadcrumb webapp.port 'port_detail' proj_slug=webapp.port.sys.proj.slug sys_pk=webapp.port.sys.pk pk=webapp.port.pk %}
+        {% breadcrumb webapp 'webapp_detail' proj_slug=webapp.port.sys.proj.slug sys_pk=webapp.port.sys.pk port_pk=webapp.port.pk pk=webapp.pk %}
+    {% endif %}
+{% endblock %}

@@ -1,13 +1,18 @@
 {% extends parent_template|default:'base.html' %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% include 'main/breadcrumbs/sys.html' %}
+{% endblock %}
 
 {% block content %}
 <section>
     <h2>Delete {{ sys.ip_address }} {{ sys.uqdn }} </h2>
-    <form action="{% url 'sys_delete' pk=sys.pk %}" method="post"> 
+    <form action="{% url 'sys_delete' proj_slug=sys.proj.slug pk=sys.pk %}?next={% url 'proj_detail' slug=sys.proj.slug %}" method="post"> 
     {% csrf_token %}
     <p>Are you sure you want to delete {{ sys.ip_address }} {{ sys.uqdn }}?</p>
     <button type="submit" class="btn btn-danger">Delete</button>
-    <a class="btn btn-success text-white" onclick="history.back()">Cancel</a>
+    <a class="btn btn-success text-white" href="{{ view.get_success_url }}">Cancel</a>
     </form>
 </section>
 {% endblock content %}

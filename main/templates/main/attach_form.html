@@ -1,5 +1,10 @@
 {% extends parent_template|default:'base.html' %}
 {% load crispy_forms_tags %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% include 'main/breadcrumbs/attach.html' %}
+{% endblock %}
 
 {% block content %}
 <section>
