@@ -1,0 +1,13 @@
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% if sys %}
+        {% breadcrumb sys.proj 'proj_detail' slug=sys.proj.slug %}
+        {% breadcrumb sys 'sys_detail' proj_slug=sys.proj.slug pk=sys.pk %}
+        {% breadcrumb '' '' %}
+    {% else %}
+        {% breadcrumb port.sys.proj 'proj_detail' slug=port.sys.proj.slug %}
+        {% breadcrumb port.sys 'sys_detail' proj_slug=port.sys.proj.slug pk=port.sys.pk %}
+        {% breadcrumb port 'port_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}
+    {% endif %}
+{% endblock %}

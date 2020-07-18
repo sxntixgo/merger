@@ -71,7 +71,7 @@ def get_donut(path, proj, template):
         colors.append(template.COLORS[getattr(template, color)][1])
 
     for risk in RISK:
-        values.append(Vuln.objects.filter(risk=risk[0], proj=proj.pk).count())
+        values.append(Vuln.objects.filter(risk=risk[0], proj=proj.slug).count())
         labels.append(risk[1])
 
     # Reverse the data so that criticals are printed first.
@@ -230,7 +230,7 @@ def generate_document(request, path):
                 hdr_cells[3].text = 'Solution'
                 
                 # Add table findings
-                vulns = Vuln.objects.filter(proj=proj.pk)
+                vulns = Vuln.objects.filter(proj=proj.slug)
                 for vuln in vulns:
                     row_cells = table.add_row().cells
                     row_cells[0].text = vuln.title
@@ -244,7 +244,7 @@ def generate_document(request, path):
                     document.add_paragraph(text)
 
             if heading == 'sec_find':
-                vulns = Vuln.objects.filter(proj=proj.pk)
+                vulns = Vuln.objects.filter(proj=proj.slug)
                 for vuln in vulns:             
                     document.add_heading(('{} [{}]').format(vuln.title, RISK[vuln.risk][1]), 2)
                     document.add_paragraph('{} {}'.format('CVE:', vuln.score), 'List Bullet')

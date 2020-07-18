@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 from dotenv import load_dotenv
 
+from django.contrib.messages import constants as messages
+
 load_dotenv()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -37,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_bootstrap_breadcrumbs',
     'phonenumber_field',
     'crispy_forms',
     'main',
@@ -139,3 +142,11 @@ MEDIA_URL = '/media/'
 
 # Phone number format
 PHONENUMBER_DB_FORMAT = 'INTERNATIONAL'
+
+# Breadcumbs template
+BREADCRUMBS_TEMPLATE = 'breadcrumbs.html'
+
+# Adjusting red color for messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}

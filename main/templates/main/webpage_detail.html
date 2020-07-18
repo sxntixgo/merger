@@ -1,5 +1,10 @@
 {% extends parent_template|default:'base.html' %}
 {% load static %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% include 'main/breadcrumbs/webpage.html' %}
+{% endblock %}
 
 {% block content %}
 <section>
@@ -7,8 +12,8 @@
         <div class="row">
             <div>
                 <h2 class="d-inline-block">{{ webpage }}</h2>
-                <a href="{% url 'webpage_edit' pk=webpage.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
-                <a href="{% url 'webpage_delete' pk=webpage.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
+                <a href="{% url 'webpage_edit' proj_slug=webpage.webapp.port.sys.proj.slug sys_pk=webpage.webapp.port.sys.pk port_pk=webpage.webapp.port.pk webapp_pk=webpage.webapp.pk pk=webpage.pk %}?next={% url 'webpage_detail' proj_slug=webpage.webapp.port.sys.proj.slug sys_pk=webpage.webapp.port.sys.pk port_pk=webpage.webapp.port.pk webapp_pk=webpage.webapp.pk pk=webpage.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
+                <a href="{% url 'webpage_delete' proj_slug=webpage.webapp.port.sys.proj.slug sys_pk=webpage.webapp.port.sys.pk port_pk=webpage.webapp.port.pk webapp_pk=webpage.webapp.pk pk=webpage.pk %}?next={% url 'webpage_detail' proj_slug=webpage.webapp.port.sys.proj.slug sys_pk=webpage.webapp.port.sys.pk port_pk=webpage.webapp.port.pk webapp_pk=webpage.webapp.pk pk=webpage.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
             </div>
         </div>
         <div class="row">
@@ -27,7 +32,7 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <h5 class="d-inline-block">Attachments</h5>
-                        <a href="{% url 'attach_create' %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
+                        <a href="{% url 'attach_create' proj_slug=webpage.webapp.port.sys.proj.slug sys_pk=webpage.webapp.port.sys.pk port_pk=webpage.webapp.port.pk webapp_pk=webpage.webapp.pk webpage_pk=webpage.pk %}?next={% url 'webpage_detail' proj_slug=webpage.webapp.port.sys.proj.slug sys_pk=webpage.webapp.port.sys.pk port_pk=webpage.webapp.port.pk webapp_pk=webpage.webapp.pk pk=webpage.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
                     </div>
                     <div class="card-body">
                     {% if webpage.attach_set.all %}
@@ -40,7 +45,7 @@
                             <tr>
                                 <td>
                                     <a href="{{ attach.media.url }}" target="_blank">{{ attach }}</a>
-                                    <a href="{% url 'attach_delete' pk=attach.pk %}">
+                                    <a href="{% url 'attach_delete' proj_slug=webpage.webapp.port.sys.proj.slug sys_pk=webpage.webapp.port.sys.pk port_pk=webpage.webapp.port.pk webapp_pk=webpage.webapp.pk webpage_pk=webpage.pk pk=attach.pk %}?next={% url 'webpage_detail' proj_slug=webpage.webapp.port.sys.proj.slug sys_pk=webpage.webapp.port.sys.pk port_pk=webpage.webapp.port.pk webapp_pk=webpage.webapp.pk pk=webpage.pk %}">
                                         <image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete">
                                     </a>
                                 </td>
@@ -64,7 +69,7 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <h5 class="d-inline-block">Vulnerabilities</h5>
-                        <a href="{% url 'vuln_create' %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
+                        <a href="{% url 'vuln_create' proj_slug=webpage.webapp.port.sys.proj.slug sys_pk=webpage.webapp.port.sys.pk port_pk=webpage.webapp.port.pk webapp_pk=webpage.webapp.pk webpage_pk=webpage.pk %}?next={% url 'webpage_detail' proj_slug=webpage.webapp.port.sys.proj.slug sys_pk=webpage.webapp.port.sys.pk port_pk=webpage.webapp.port.pk webapp_pk=webpage.webapp.pk pk=webpage.webapp.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
                     </div>
                     <div class="card-body">
                     {% if webpage.vuln_set.all %}
@@ -78,9 +83,9 @@
                             {% for vuln in webpage.vuln_set.all %}
                             <tr>    
                                 <td>
-                                    <a href="{% url 'vuln_detail' pk=vuln.pk %}">{{ vuln.title }}</a>
-                                    <a href="{% url 'vuln_edit' pk=vuln.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
-                                    <a href="{% url 'vuln_delete' pk=vuln.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
+                                    <a href="{% url 'vuln_detail' proj_slug=webpage.webapp.port.sys.proj.slug sys_pk=webpage.webapp.port.sys.pk port_pk=webpage.webapp.port.pk webapp_pk=webpage.webapp.pk webpage_pk=webpage.pk pk=vuln.pk %}?next={% url 'webpage_detail' proj_slug=webpage.webapp.port.sys.proj.slug sys_pk=webpage.webapp.port.sys.pk port_pk=webpage.webapp.port.pk webapp_pk=webpage.webapp.pk pk=webpage.webapp.pk %}">{{ vuln.title }}</a>
+                                    <a href="{% url 'vuln_edit' proj_slug=webpage.webapp.port.sys.proj.slug sys_pk=webpage.webapp.port.sys.pk port_pk=webpage.webapp.port.pk webapp_pk=webpage.webapp.pk webpage_pk=webpage.pk pk=vuln.pk %}?next={% url 'webpage_detail' proj_slug=webpage.webapp.port.sys.proj.slug sys_pk=webpage.webapp.port.sys.pk port_pk=webpage.webapp.port.pk webapp_pk=webpage.webapp.pk pk=webpage.webapp.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
+                                    <a href="{% url 'vuln_delete' proj_slug=webpage.webapp.port.sys.proj.slug sys_pk=webpage.webapp.port.sys.pk port_pk=webpage.webapp.port.pk webapp_pk=webpage.webapp.pk webpage_pk=webpage.pk pk=vuln.pk %}?next={% url 'webpage_detail' proj_slug=webpage.webapp.port.sys.proj.slug sys_pk=webpage.webapp.port.sys.pk port_pk=webpage.webapp.port.pk webapp_pk=webpage.webapp.pk pk=webpage.webapp.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
                                 </td>
                                 <td>{{ vuln.cve }}</td>
                                 <td>{{ vuln.risk }}</td>

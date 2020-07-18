@@ -1,4 +1,10 @@
 {% extends parent_template|default:'base.html' %}
+{% load static %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% include 'main/breadcrumbs/poc.html' %}
+{% endblock %}
 
 {% block content %}
 <section>
@@ -6,8 +12,8 @@
         <div class="row">
             <div>
                 <h2 class="d-inline-block">{{ poc.name }}</h2>
-                <a href="{% url 'poc_edit' pk=poc.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
-                <a href="{% url 'poc_delete' pk=poc.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
+                <a href="{% url 'poc_edit' proj_slug=poc.proj.slug pk=poc.pk %}?next={% url 'proj_detail' slug=poc.proj.slug %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
+                <a href="{% url 'poc_delete' proj_slug=poc.proj.slug pk=poc.pk %}?next={% url 'proj_detail' slug=poc.proj.slug %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
             </div>
         </div>
         <div class="row">

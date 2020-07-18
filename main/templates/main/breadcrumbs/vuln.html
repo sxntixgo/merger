@@ -1,0 +1,61 @@
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% if sys %}
+        {% breadcrumb sys.proj 'proj_detail' slug=sys.proj.slug %}
+        {% breadcrumb sys 'sys_detail' proj_slug=sys.proj.slug pk=port.sys.pk %}
+        {% breadcrumb '' '' %}
+    {% elif port %}
+        {% breadcrumb port.sys.proj 'proj_detail' slug=port.sys.proj.slug %}
+        {% breadcrumb port.sys 'sys_detail' proj_slug=port.sys.proj.slug pk=port.sys.pk %}
+        {% breadcrumb port 'port_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}
+        {% breadcrumb '' '' %}
+    {% elif app %}
+        {% breadcrumb app.sys.proj 'proj_detail' slug=app.sys.proj.slug %}
+        {% breadcrumb app.sys 'sys_detail' proj_slug=app.sys.proj.slug pk=app.sys.pk %}
+        {% breadcrumb app 'app_detail' proj_slug=app.sys.proj.slug sys_pk=app.sys.pk pk=app.pk %}
+        {% breadcrumb '' '' %}
+    {% elif webapp %}
+        {% breadcrumb webapp.port.sys.proj 'proj_detail' slug=webapp.port.sys.proj.slug %}
+        {% breadcrumb webapp.port.sys 'sys_detail' proj_slug=webapp.port.sys.proj.slug pk=webapp.port.sys.pk %}
+        {% breadcrumb webapp.port 'port_detail' proj_slug=webapp.port.sys.proj.slug sys_pk=webapp.port.sys.pk pk=webapp.port.pk %}
+        {% breadcrumb webapp 'webapp_detail' proj_slug=webapp.port.sys.proj.slug sys_pk=webapp.port.sys.pk port_pk=webapp.port.pk pk=webapp.pk %}
+        {% breadcrumb '' '' %}
+    {% elif webpage %}
+        {% breadcrumb webpage.webapp.port.sys.proj 'proj_detail' slug=webpage.webapp.port.sys.proj.slug %}
+        {% breadcrumb webpage.webapp.port.sys 'sys_detail' proj_slug=webpage.webapp.port.sys.proj.slug pk=webpage.webapp.port.sys.pk %}
+        {% breadcrumb webpage.webapp.port 'port_detail' proj_slug=webpage.webapp.port.sys.proj.slug sys_pk=webpage.webapp.port.sys.pk pk=webpage.webapp.port.pk %}
+        {% breadcrumb webpage.webapp 'webapp_detail' proj_slug=webpage.webapp.port.sys.proj.slug sys_pk=webpage.webapp.port.sys.pk port_pk=webpage.webapp.port.pk pk=webpage.webapp.pk %}
+        {% breadcrumb webpage 'webpage_detail' proj_slug=webpage.webapp.port.sys.proj.slug sys_pk=webpage.webapp.port.sys.pk port_pk=webpage.webapp.port.pk webapp_pk=webpage.webapp.pk pk=webpage.pk %}
+        {% breadcrumb '' '' %}
+    {% else %}
+        {% if vuln.sys %}
+            {% breadcrumb vuln.sys.proj 'proj_detail' slug=vuln.sys.proj.slug %}
+            {% breadcrumb vuln.sys 'sys_detail' proj_slug=vuln.sys.proj.slug pk=vuln.sys.pk %}
+            {% breadcrumb vuln 'vuln_detail' proj_slug=vuln.sys.proj.slug sys_pk=vuln.sys.pk pk=vuln.pk %}
+        {% elif vuln.app %}
+            {% breadcrumb vuln.app.sys.proj 'proj_detail' slug=vuln.app.sys.proj.slug %}
+            {% breadcrumb vuln.app.sys 'sys_detail' proj_slug=vuln.app.sys.proj.slug pk=vuln.app.sys.pk %}
+            {% breadcrumb vuln.app 'app_detail' proj_slug=vuln.app.sys.proj.slug sys_pk=vuln.app.sys.pk pk=vuln.app.pk %}
+            {% breadcrumb vuln 'vuln_detail' proj_slug=vuln.app.sys.proj.slug sys_pk=vuln.app.sys.pk port_pk=vuln.app.pk pk=vuln.pk %}
+        {% elif vuln.port %}
+            {% breadcrumb vuln.port.sys.proj 'proj_detail' slug=vuln.port.sys.proj.slug %}
+            {% breadcrumb vuln.port.sys 'sys_detail' proj_slug=vuln.port.sys.proj.slug pk=vuln.port.sys.pk %}
+            {% breadcrumb vuln.port 'port_detail' proj_slug=vuln.port.sys.proj.slug sys_pk=vuln.port.sys.pk pk=vuln.port.pk %}
+            {% breadcrumb vuln 'vuln_detail' proj_slug=vuln.port.sys.proj.slug sys_pk=vuln.port.sys.pk port_pk=vuln.port.pk pk=vuln.pk %}
+        {% elif vuln.webapp %}
+            {% breadcrumb vuln.webapp.port.sys.proj 'proj_detail' slug=vuln.webapp.port.sys.proj.slug %}
+            {% breadcrumb vuln.webapp.port.sys 'sys_detail' proj_slug=vuln.webapp.port.sys.proj.slug pk=vuln.webapp.port.sys.pk %}
+            {% breadcrumb vuln.webapp.port 'port_detail' proj_slug=vuln.webapp.port.sys.proj.slug sys_pk=vuln.webapp.port.sys.pk pk=vuln.webapp.port.pk %}
+            {% breadcrumb vuln.webapp 'webapp_detail' proj_slug=vuln.webapp.port.sys.proj.slug sys_pk=vuln.webapp.port.sys.pk port_pk=vuln.webapp.port.pk pk=vuln.webapp.pk %}
+            {% breadcrumb vuln 'vuln_detail' proj_slug=vuln.webapp.port.sys.proj.slug sys_pk=vuln.webapp.port.sys.pk port_pk=vuln.webapp.port.pk webapp_pk=vuln.webapp.pk pk=vuln.pk %}
+        {% elif vuln.webpage %}
+            {% breadcrumb vuln.webpage.webapp.port.sys.proj 'proj_detail' slug=vuln.webpage.webapp.port.sys.proj.slug %}
+            {% breadcrumb vuln.webpage.webapp.port.sys 'sys_detail' proj_slug=vuln.webpage.webapp.port.sys.proj.slug pk=vuln.webpage.webapp.port.sys.pk %}
+            {% breadcrumb vuln.webpage.webapp.port 'port_detail' proj_slug=vuln.webpage.webapp.port.sys.proj.slug sys_pk=vuln.webpage.webapp.port.sys.pk pk=vuln.webpage.webapp.port.pk %}
+            {% breadcrumb vuln.webpage.webapp 'webapp_detail' proj_slug=vuln.webpage.webapp.port.sys.proj.slug sys_pk=vuln.webpage.webapp.port.sys.pk port_pk=vuln.webpage.webapp.port.pk pk=vuln.webpage.webapp.pk %}
+            {% breadcrumb vuln.webpage 'webpage_detail' proj_slug=vuln.webpage.webapp.port.sys.proj.slug sys_pk=vuln.webpage.webapp.port.sys.pk port_pk=vuln.webpage.webapp.port.pk webapp_pk=vuln.webpage.webapp.pk pk=vuln.webpage.pk %}
+            {% breadcrumb vuln 'vuln_detail' proj_slug=vuln.webpage.webapp.port.sys.proj.slug sys_pk=vuln.webpage.webapp.port.sys.pk port_pk=vuln.webpage.webapp.port.pk webapp_pk=vuln.webpage.webapp.pk webpage_pk=vuln.webpage.pk pk=vuln.pk %}
+        {% endif %}
+    {% endif %}
+{% endblock %}

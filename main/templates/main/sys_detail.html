@@ -1,5 +1,10 @@
 {% extends parent_template|default:'base.html' %}
 {% load static %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% include 'main/breadcrumbs/sys.html' %}
+{% endblock %}
 
 {% block content %}
 <section>
@@ -7,8 +12,8 @@
         <div class="row">
             <div>
                 <h2 class="d-inline-block">{{ sys }}</h2>
-                <a href="{% url 'sys_edit' pk=sys.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
-                <a href="{% url 'sys_delete' pk=sys.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
+                <a href="{% url 'sys_edit' proj_slug=sys.proj.slug pk=sys.pk %}?next={% url 'sys_detail' proj_slug=sys.proj.slug pk=sys.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
+                <a href="{% url 'sys_delete' proj_slug=sys.proj.slug pk=sys.pk %}?next={% url 'sys_detail' proj_slug=sys.pk pk=sys.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
             </div>
         </div>
         <div class="row">
@@ -17,17 +22,19 @@
                     <div class="card-header">
                         <h5 class="d-inline-block">Info</h5>
                     </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><b>IP Address:</b> {{ sys.ip_address }}</li>
-                        <li class="list-group-item"><b>FQDN:</b> {{ sys.fqdn }}</li>
-                        <li class="list-group-item"><b>OS:</b> {{ sys.os }}</li>
-                        <li class="list-group-item"><b>Version:</b> {{ sys.version }}</li>
-                    </ul>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><b>IP Address:</b> {{ sys.ip_address }}</li>
+                            <li class="list-group-item"><b>FQDN:</b> {{ sys.fqdn }}</li>
+                            <li class="list-group-item"><b>OS:</b> {{ sys.os }}</li>
+                            <li class="list-group-item"><b>Version:</b> {{ sys.version }}</li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="card mb-4">
                     <div class="card-header">
                         <h5 class="d-inline-block">Ports</h5>
-                        <a href="{% url 'port_create' %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
+                        <a href="{% url 'port_create' proj_slug=sys.proj.slug sys_pk=sys.pk %}?next={% url 'sys_detail' proj_slug=sys.proj.slug pk=sys.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
                     </div>
                     <div class="card-body">
                     {% if sys.port_set.all %}
@@ -36,20 +43,27 @@
                                 <th>Protocol/Number</th>
                                 <th>Service</th>
                                 <th>Version</th>
-                                <th>Is Webapp?</th>
                                 <th>Web applications</th>
                             </tr>
                             {% for port in sys.port_set.all %}
                             <tr>
                                 <td>
-                                    <a href="{% url 'port_detail' pk=port.pk %}">{{ port.get_protocol_text }}/{{ port.number }}</a>
-                                    <a href="{% url 'port_edit' pk=port.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
-                                    <a href="{% url 'port_delete' pk=port.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
+                                    <a href="{% url 'port_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}?next={% url 'sys_detail' proj_slug=sys.proj.slug pk=sys.pk %}">{{ port.get_protocol_text }}:{{ port.number }}</a>
+                                    {% if port.is_web_app %}<image style="vertical-align: baseline;" src="{% static 'img/globe.svg' %}" alt="Is Webapp">{% endif %}
+                                    <a href="{% url 'port_edit' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}?next={% url 'sys_detail' proj_slug=sys.proj.slug pk=sys.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
+                                    <a href="{% url 'port_delete' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}?next={% url 'sys_detail' proj_slug=sys.proj.slug pk=sys.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
                                 </td>
                                 <td>{{ port.service_name }}</td>
                                 <td>{{ port.version }}</td>
-                                <td>{{ port.is_web_app }}</td>
-                                <td>{{ port.webapp_set.all|length }}: {% for webapp in port.webapp_set.all %}{{ webapp }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+                                <td>
+                                {% if port.webapp_set.all %}
+                                <b>{{ port.webapp_set.all|length }}:</b> {% for webapp in port.webapp_set.all %}{{ webapp }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                                {% else %}
+                                {% if port.is_web_app %}
+                                <a href="{% url 'webapp_create' proj_slug=sys.proj.slug sys_pk=sys.pk port_pk=port.pk %}?next={% url 'sys_detail' proj_slug=sys.proj.slug pk=sys.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
+                                {% endif %}
+                                {% endif %}
+                                </td>
                             </tr>
                             {% endfor %}
                         </table>
@@ -59,7 +73,7 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <h5 class="d-inline-block">Applications</h5>
-                        <a href="{% url 'app_create' %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
+                        <a href="{% url 'app_create' proj_slug=sys.proj.slug sys_pk=sys.pk %}?next={% url 'sys_detail' proj_slug=sys.proj.slug pk=sys.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
                     </div>
                     <div class="card-body">
                     {% if sys.app_set.all %}
@@ -71,9 +85,9 @@
                             {% for app in sys.app_set.all %}
                             <tr>
                                 <td>
-                                    <a href="{% url 'app_detail' pk=app.pk %}">{{ app.name }}</a>
-                                    <a href="{% url 'app_edit' pk=app.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
-                                    <a href="{% url 'app_delete' pk=app.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
+                                    <a href="{% url 'app_detail' proj_slug=sys.proj.slug sys_pk=sys.pk pk=app.pk %}?next={% url 'sys_detail' proj_slug=sys.proj.slug pk=sys.pk %}">{{ app.name }}</a>
+                                    <a href="{% url 'app_edit' proj_slug=sys.proj.slug sys_pk=sys.pk pk=app.pk %}?next={% url 'sys_detail' proj_slug=sys.proj.slug pk=sys.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
+                                    <a href="{% url 'app_delete' proj_slug=sys.proj.slug sys_pk=sys.pk pk=app.pk %}?next={% url 'sys_detail' proj_slug=sys.proj.slug pk=sys.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
                                 </td>
                                 <td>{{ app.version }}</td>
                             </tr>
@@ -95,7 +109,7 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <h5 class="d-inline-block">Vulnerabilities</h5>
-                        <a href="{% url 'vuln_create' %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
+                        <a href="{% url 'vuln_create' proj_slug=sys.proj.slug sys_pk=sys.pk %}?next={% url 'sys_detail' proj_slug=sys.proj.slug pk=sys.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
                     </div>
                     <div class="card-body">
                     {% if sys.vuln_set.all %}
@@ -109,9 +123,9 @@
                             {% for vuln in sys.vuln_set.all %}
                             <tr>    
                                 <td>
-                                    <a href="{% url 'vuln_detail' pk=vuln.pk %}">{{ vuln.title }}</a>
-                                    <a href="{% url 'vuln_edit' pk=vuln.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
-                                    <a href="{% url 'vuln_delete' pk=vuln.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
+                                    <a href="{% url 'vuln_detail' proj_slug=sys.proj.slug sys_pk=sys.pk pk=vuln.pk %}?next={% url 'sys_detail' proj_slug=sys.proj.slug pk=sys.pk %}">{{ vuln.title }}</a>
+                                    <a href="{% url 'vuln_edit' proj_slug=sys.proj.slug sys_pk=sys.pk pk=vuln.pk %}?next={% url 'sys_detail' proj_slug=sys.proj.slug pk=sys.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
+                                    <a href="{% url 'vuln_delete' proj_slug=sys.proj.slug sys_pk=sys.pk pk=vuln.pk %}?next={% url 'sys_detail' proj_slug=sys.proj.slug pk=sys.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
                                 </td>
                                 <td>{{ vuln.cve }}</td>
                                 <td>{{ vuln.risk }}</td>

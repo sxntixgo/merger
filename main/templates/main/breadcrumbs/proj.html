@@ -1,0 +1,5 @@
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% breadcrumb proj 'proj_detail' slug=proj.slug %}
+{% endblock %}

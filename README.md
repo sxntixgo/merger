@@ -59,6 +59,7 @@ This project is MIT license.
 
 * [Bootstrap 4](https://getbootstrap.com)
 * [Django](https://www.djangoproject.com/)
+* [django-bootstrap-breadcrumbs](https://github.com/prymitive/bootstrap-breadcrumbs/)
 * [django-crispy-forms](https://github.com/django-crispy-forms/django-crispy-forms)
 * [django-phonenumber-field](https://github.com/stefanfoulis/django-phonenumber-field)
 * [Feather](https://feathericons.com)

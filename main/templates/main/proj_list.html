@@ -6,7 +6,7 @@
     <div class="row">
         <div>
             <h2 class="d-inline-block">Projects</h2>
-            <a href="{% url 'proj_create'%}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
+            <a href="{% url 'proj_create'%}?next={% url 'proj_list' %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
         </div>
     </div>
     <div class="row">
@@ -23,20 +23,31 @@
             <tr>
                 <td>
                     <div>
-                        <h6 class="d-inline-block"><a href="{% url 'proj_detail' pk=proj.pk %}">{{ proj.name }}</a></h6>
-                        <a href="{% url 'proj_edit' pk=proj.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
-                        <a href="{% url 'proj_delete' pk=proj.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
+                        <h6 class="d-inline-block"><a href="{% url 'proj_detail' slug=proj.slug %}">{{ proj.name }}</a></h6>
+                        <a href="{% url 'proj_edit' slug=proj.slug %}?next={% url 'proj_list' %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
+                        <a href="{% url 'proj_delete' slug=proj.slug %}?next={% url 'proj_list' %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
                     </div>
                 </td>
                 <td>{{ proj.org_name }}</td>
-                <td>{{ proj.system_set.all.count}}</td>
+
+                <td>
+                {% if  proj.sys_set.all %}
+                <b>({{ proj.sys_set.all|length }}):</b> 
+                    {% for sys in proj.sys_set.all %}
+                {{ sys }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                {% else %}
+                <a href="{% url 'poc_create' proj_slug=proj.slug %}?next={% url 'proj_list' %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
+                {% endif %}
+                
                 <td>
                 {% if  proj.poc_set.all %}
+                <b>({{ proj.sys_set.all|length }}):</b> 
                     {% for poc in proj.poc_set.all %}
                 {{ poc }}{% if not forloop.last %}, {% endif %}
                     {% endfor %}
                 {% else %}
-                <a href="{% url 'proj_create' %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
+                <a href="{% url 'poc_create' proj_slug=proj.slug %}?next={% url 'proj_list' %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
                 {% endif %}
                 </td>
                 <td>{{ proj.init_date}}</td>
