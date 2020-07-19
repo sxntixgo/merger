@@ -2,7 +2,45 @@
 
 {% block content %}
 <section>
-    <p>If you need to see the projects, click on <a href="{% url 'proj_list' %}">List Project</a><p>
-    <p>If you need to create a new project, click on <a href="{% url 'proj_create' %}">Create Project</a><p>
+    <div class="jumbotron">
+        <div class="container">
+            <h4>merger</h4>
+            <p>merger is an open-source web application that (1) organizes and consolidate all the intermediate data produced during a security assessment or penetration test, and (2) generates a report based on such data and predefined templates. </p>
+            <p>This web application employs different objects (Systems, Ports, Web Applications, Webpages, Vulnerabilities, etc.) and links them based on their relationships. These objects are organized in a tree data structure, following a general-to-detail methodology. For example a System might have Vulnerabilities and Ports, which can have Web Applications with additional Vulnerabilities. Consequently, all the data from engagements is located in a single place, easily accessible, and organized in an systematic way.</p>
+            
+            <div class="card">
+            <div class="card-body">
+                <h5>Getting started</h5>
+
+                <ul>
+                    <li>If you need to see the projects, click on <a href="{% url 'proj_list' %}">List Project</a></li>
+                    <li>If you need to create a new project, click on <a href="{% url 'proj_create' %}">Create Project</a></li>
+                </ul>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="jumbotron">
+        <div class="container">
+            <h5><a href="https://github.com/sxntixgo/merger/">Source code</a></h5>
+            <h5><a href="https://github.com/sxntixgo/merger/blob/master/LICENSE">License</a></h5>
+            
+            <h5>Libraries, Frameworks, and Dependencies</h5>
+            <ul>
+                <li><a href="https://getbootstrap.com/">Bootstrap 4</a></li>
+                <li><a href="https://www.djangoproject.com/">Django</a></li>
+                <li><a href="https://github.com/prymitive/bootstrap-breadcrumbs/">django-bootstrap-breadcrumbs</a></li>
+                <li><a href="https://github.com/django-crispy-forms/django-crispy-forms/">django-crispy-forms</a></li>
+                <li><a href="https://github.com/stefanfoulis/django-phonenumber-field/">django-phonenumber-field</a></li>
+                <li><a href="https://feathericons.com/">Feather</a></li>
+                <li><a href="https://jquery.com/">jQuery</a></li>
+                <li><a href="https://matplotlib.org/">matplotlib</a></li>
+                <li><a href="https://popper.js.org/">PopperJs</a></li>
+                <li><a href="https://www.psycopg.org/">psycopg2</a></li>
+                <li><a href="https://python-docx.readthedocs.io/en/latest/">python-docx</a></li>
+            </li>
+        </div>
+    </div>
 <section>
+
 {% endblock content %}

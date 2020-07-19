@@ -4,7 +4,7 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView, View
 
 from .models import App, Attach, Domain, NetAddr, Proj, Poc, Port, Sys, Vuln, WebApp, WebPage
-from .utils import AddParentToContextMixin, SuccessMessageMixin, SuccessUrlMixin
+from .utils import AddParentToContextMixin, GetTreeMixin, SuccessMessageMixin, SuccessUrlMixin
 from .forms import AppForm, AttachForm, DomainForm, NetAddrForm, PocForm, PortForm, ProjForm, SysForm, VulnForm, WebAppForm, WebPageForm
 
 class Welcome(View):
@@ -23,7 +23,7 @@ class ProjDelete(SuccessUrlMixin, SuccessMessageMixin, DeleteView):
     success_message = 'Project %(name)s deleted.'
 
 
-class ProjDetail(DetailView):
+class ProjDetail(GetTreeMixin, DetailView):
     model = Proj
 
 
@@ -62,7 +62,7 @@ class PocDelete(SuccessUrlMixin, SuccessMessageMixin, DeleteView):
     success_message = 'Point of contact %(name)s deleted.'
 
 
-class PocDetail(DetailView):
+class PocDetail(GetTreeMixin, DetailView):
     model = Poc
 
     def get_object(self):
@@ -170,7 +170,7 @@ class SysDelete(SuccessUrlMixin, SuccessMessageMixin, DeleteView):
     success_message = 'System %(ip_address)s deleted.'
     
 
-class SysDetail(DetailView):
+class SysDetail(GetTreeMixin, DetailView):
     model = Sys
 
     def get_object(self):
@@ -223,7 +223,7 @@ class PortDelete(SuccessUrlMixin, SuccessMessageMixin, DeleteView):
     success_message = 'Port %(protocol)s/%(number)s deleted.'
 
 
-class PortDetail(DetailView):
+class PortDetail(GetTreeMixin, DetailView):
     model = Port
 
     def get_object(self):
@@ -277,12 +277,12 @@ class WebAppCreate(AddParentToContextMixin, SuccessUrlMixin, SuccessMessageMixin
             return render(request, self.template_name, {'form': form})
 
 
-class WebAppDelete(SuccessMessageMixin, DeleteView):
+class WebAppDelete(SuccessUrlMixin, SuccessMessageMixin, DeleteView):
     model = WebApp
     success_message = 'Webapp %(name)s deleted.'
 
 
-class WebAppDetail(DetailView):
+class WebAppDetail(GetTreeMixin, DetailView):
     model = WebApp
 
     def get_object(self):
@@ -342,7 +342,7 @@ class WebPageDelete(SuccessUrlMixin, SuccessMessageMixin, DeleteView):
     success_message = 'Webpage %(path)s deleted.'
 
 
-class WebPageDetail(DetailView):
+class WebPageDetail(GetTreeMixin, DetailView):
     model = WebPage
 
     def get_object(self):
@@ -430,7 +430,7 @@ class VulnDelete(AddParentToContextMixin, SuccessUrlMixin, SuccessMessageMixin, 
     success_message = 'Vulnerability %(title)s deleted.'
 
 
-class VulnDetail(DetailView):
+class VulnDetail(GetTreeMixin, DetailView):
     model = Vuln
 
     def get_object(self):
@@ -620,7 +620,7 @@ class AppDelete(SuccessUrlMixin, SuccessMessageMixin, DeleteView):
     success_message = 'App %(name)s deleted.'
 
 
-class AppDetail(DetailView):
+class AppDetail(GetTreeMixin, DetailView):
     model = App
 
     def get_object(self):

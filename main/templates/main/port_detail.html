@@ -8,110 +8,108 @@
 
 {% block content %}
 <section>
-    <div class="container-fluid">
-        <div class="row">
-            <div>
-                <h2 class="d-inline-block">{{ port.get_protocol_text }}:{{ port.number }}</h2>
-                {% if port.is_web_app %}<image style="vertical-align: baseline;" src="{% static 'img/globe.svg' %}" alt="Is Webapp">{% endif %}
-                <a href="{% url 'port_edit' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}?next={% url 'port_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
-                <a href="{% url 'port_delete' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}?next={% url 'port_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
+    <div class="row">
+        <div class="col-sm-12">
+            <h2 class="d-inline-block">{{ port.get_protocol_text }}:{{ port.number }}</h2>
+            {% if port.is_web_app %}<image style="vertical-align: baseline;" src="{% static 'img/globe.svg' %}" alt="Is Webapp">{% endif %}
+            <a href="{% url 'port_edit' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}?next={% url 'port_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
+            <a href="{% url 'port_delete' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}?next={% url 'port_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Info</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><b>Protocol:</b> {{ port.get_protocol_text }}</li>
+                        <li class="list-group-item"><b>Number:</b> {{ port.number }}</li>
+                        <li class="list-group-item"><b>Service Name:</b> {{ port.service_name }}</li>
+                        <li class="list-group-item"><b>Version:</b> {{ port.version }}</li>
+                    </ul>
+                </div>
+            </div>
+            {% if port.is_web_app %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="d-inline-block">Web Applications</h5>
+                    <a href="{% url 'webapp_create' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk port_pk=port.pk %}?next={% url 'port_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
+                </div>
+                <div class="card-body">
+                {% if port.webapp_set.all %}
+                    <table class="card-table table table-sm table-hover">
+                        <tr>
+                            <th>Name</th>
+                            <th>Version</th>
+                            <th>Language</th>
+                            <th>Framework</th>
+                            <th>Root URL</th>
+                            <th>Web Pages</th>
+                        </tr>
+                        {% for webapp in port.webapp_set.all %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'webapp_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk port_pk=port.pk pk=webapp.pk %}?next={% url 'port_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}">{{ webapp.name }}</a>
+                                <a href="{% url 'webapp_edit' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk port_pk=port.pk pk=webapp.pk %}?next={% url 'port_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
+                                <a href="{% url 'webapp_delete' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk port_pk=port.pk pk=webapp.pk %}?next={% url 'port_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
+                            </td>
+                            <td>{{ webapp.version }}</td>
+                            <td>{{ webapp.programing_lang }}</td>
+                            <td>{{ webapp.programing_framework }}</td>
+                            <td>{{ webapp.root_url }}</td>
+                            <td>
+                            {% if webapp.webpage_set.all %}
+                            {{ webapp.webpage_set.all|length }}
+                            {% else %}
+                            <a href="{% url 'webpage_create' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk port_pk=port.pk webapp_pk=webapp.pk %}?next={% url 'port_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
+                            {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                {% endif %}
+                </div>
+            </div>
+            {% endif %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Comments</h5>
+                </div>
+                <div class="card-body">
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h5>Info</h5>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><b>Protocol:</b> {{ port.get_protocol_text }}</li>
-                            <li class="list-group-item"><b>Number:</b> {{ port.number }}</li>
-                            <li class="list-group-item"><b>Service Name:</b> {{ port.service_name }}</li>
-                            <li class="list-group-item"><b>Version:</b> {{ port.version }}</li>
-                        </ul>
-                    </div>
+        <div class="col-sm-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="d-inline-block">Vulnerabilities</h5>
+                    <a href="{% url 'vuln_create' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk port_pk=port.pk %}?next={% url 'port_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
                 </div>
-                {% if port.is_web_app %}
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h5 class="d-inline-block">Web Applications</h5>
-                        <a href="{% url 'webapp_create' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk port_pk=port.pk %}?next={% url 'port_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
-                    </div>
-                    <div class="card-body">
-                    {% if port.webapp_set.all %}
-                        <table class="card-table table table-sm table-hover">
-                            <tr>
-                                <th>Name</th>
-                                <th>Version</th>
-                                <th>Language</th>
-                                <th>Framework</th>
-                                <th>Root URL</th>
-                                <th>Web Pages</th>
-                            </tr>
-                            {% for webapp in port.webapp_set.all %}
-                            <tr>
-                                <td>
-                                    <a href="{% url 'webapp_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk port_pk=port.pk pk=webapp.pk %}?next={% url 'port_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}">{{ webapp.name }}</a>
-                                    <a href="{% url 'webapp_edit' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk port_pk=port.pk pk=webapp.pk %}?next={% url 'port_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
-                                    <a href="{% url 'webapp_delete' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk port_pk=port.pk pk=webapp.pk %}?next={% url 'port_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
-                                </td>
-                                <td>{{ webapp.version }}</td>
-                                <td>{{ webapp.programing_lang }}</td>
-                                <td>{{ webapp.programing_framework }}</td>
-                                <td>{{ webapp.root_url }}</td>
-                                <td>
-                                {% if webapp.webpage_set.all %}
-                                {{ webapp.webpage_set.all|length }}
-                                {% else %}
-                                <a href="{% url 'webpage_create' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk port_pk=port.pk webapp_pk=webapp.pk %}?next={% url 'port_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
-                                {% endif %}
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    {% endif %}
-                    </div>
-                </div>
+                <div class="card-body">
+                {% if port.vuln_set.all %}
+                    <table class="card-table table table-sm table-hover">
+                        <tr>
+                            <th>Title</th>
+                            <th>CVE</th>
+                            <th>Risk</th>
+                            <th>Score</th>
+                        </tr>
+                        {% for vuln in port.vuln_set.all %}
+                        <tr>    
+                            <td>
+                                <a href="{% url 'vuln_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk port_pk=port.pk pk=vuln.pk %}?next={% url 'port_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}">{{ vuln.title }}</a>
+                                <a href="{% url 'vuln_edit' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk port_pk=port.pk pk=vuln.pk %}?next={% url 'port_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
+                                <a href="{% url 'vuln_delete' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk port_pk=port.pk pk=vuln.pk %}?next={% url 'port_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
+                            </td>
+                            <td>{{ vuln.cve }}</td>
+                            <td>{{ vuln.risk }}</td>
+                            <td>{{ vuln.score }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
                 {% endif %}
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h5>Comments</h5>
-                    </div>
-                    <div class="card-body">
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h5 class="d-inline-block">Vulnerabilities</h5>
-                        <a href="{% url 'vuln_create' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk port_pk=port.pk %}?next={% url 'port_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
-                    </div>
-                    <div class="card-body">
-                    {% if port.vuln_set.all %}
-                        <table class="card-table table table-sm table-hover">
-                            <tr>
-                                <th>Title</th>
-                                <th>CVE</th>
-                                <th>Risk</th>
-                                <th>Score</th>
-                            </tr>
-                            {% for vuln in port.vuln_set.all %}
-                            <tr>    
-                                <td>
-                                    <a href="{% url 'vuln_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk port_pk=port.pk pk=vuln.pk %}?next={% url 'port_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}">{{ vuln.title }}</a>
-                                    <a href="{% url 'vuln_edit' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk port_pk=port.pk pk=vuln.pk %}?next={% url 'port_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
-                                    <a href="{% url 'vuln_delete' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk port_pk=port.pk pk=vuln.pk %}?next={% url 'port_detail' proj_slug=port.sys.proj.slug sys_pk=port.sys.pk pk=port.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
-                                </td>
-                                <td>{{ vuln.cve }}</td>
-                                <td>{{ vuln.risk }}</td>
-                                <td>{{ vuln.score }}</td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    {% endif %}
-                    </div>
                 </div>
             </div>
         </div>

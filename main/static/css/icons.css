@@ -1,0 +1,50 @@
+.feather {
+    display: inline-block;
+    height:12px;
+    width: 12px;
+    text-align: center;
+}
+
+.chevron-down {
+    background-image:url(/static/img/tree/chevron-down.svg);
+}
+
+.chevron-right {
+    background-image: url(/static/img/tree/chevron-right.svg);
+}
+
+.archive {
+    background-image: url(/static/img/tree/archive.svg);
+}
+
+.hash {
+    background-image: url(/static/img/tree/hash.svg);
+}
+
+.monitor {
+    background-image: url(/static/img/tree/monitor.svg);
+}
+
+.layout {
+    background-image: url(/static/img/tree/layout.svg);
+}
+
+.image {
+    background-image: url(/static/img/tree/image.svg);
+}
+
+.globe {
+    background-image: url(/static/img/tree/globe.svg);
+}
+
+.file-text {
+    background-image: url(/static/img/tree/file-text.svg);
+}
+
+.crosshair {
+    background-image: url(/static/img/tree/crosshair.svg);
+}
+
+.user {
+    background-image: url(/static/img/tree/user.svg);
+}

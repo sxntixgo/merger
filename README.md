@@ -40,7 +40,7 @@ This is the list of current features:
 This is the list of features on the pipeline (not in any specific order):
 
 * Users, groups and permissions, to allow collaboration,
-* Improvements to the web interface,
+* ✅Improvements to the web interface,
 * Tests,
 * Import from security tools (nmap, nessus, etc),
 * Web API.
