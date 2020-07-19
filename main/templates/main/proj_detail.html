@@ -8,137 +8,135 @@
 
 {% block content %}
 <section>
-    <div class="container-fluid">
-        <div class="row">
-            <div>
+    <div class="row">
+        <div class="col-sm-12">
             <h2 class="d-inline-block">{{ proj.name }}</h2>
-                <a href="{% url 'proj_edit' slug=proj.slug %}?next={% url 'proj_detail' slug=proj.slug %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
-                <a href="{% url 'proj_delete' slug=proj.slug %}?next={% url 'proj_list' %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
-            </div>
+            <a href="{% url 'proj_edit' slug=proj.slug %}?next={% url 'proj_detail' slug=proj.slug %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
+            <a href="{% url 'proj_delete' slug=proj.slug %}?next={% url 'proj_list' %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
         </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h5 class="d-inline-block">Info</h5>
-                    </div>
-                    <div class="card-body">
-                        <table class="card-table table">
-                            <tr>
-                                <td><b>Organization:</b> {{ proj.org_name }}</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="{% url 'domain_create' proj_slug=proj.slug%}?next={% url 'proj_detail' slug=proj.slug %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
-                                    <b>Domains{% if proj.domain_set.all %} ({{ proj.domain_set.all|length }}){% endif %}: </b> 
-                                {% for domain in proj.domain_set.all %}{{ domain }}
-                                <a href="{% url 'domain_delete' proj_slug=proj.slug pk=domain.pk %}?next={% url 'proj_detail' slug=proj.slug %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>{% if not forloop.last %}, {% endif %} {% endfor %}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="{% url 'netaddr_create' proj_slug=proj.slug %}?next={% url 'proj_detail' slug=proj.slug %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
-                                    <b>Network Addresses{% if proj.netaddr_set.all %} ({{ proj.netaddr_set.all|length }}){% endif %}: </b> 
-                                    {% for net_address in proj.netaddr_set.all %}{{ net_address }} 
-                                    <a href="{% url 'netaddr_delete' proj_slug=proj.slug pk=net_address.pk %}?next={% url 'proj_detail' slug=proj.slug %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>{% if not forloop.last %}, {% endif %} {% endfor %}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><b>Start Date:</b> {{ proj.init_date }}</td>
-                            </tr>
-                            <tr>
-                                <td><b>End Date:</b> {{ proj.end_date }}</td>
-                            </tr>
-                        </table>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="d-inline-block">Info</h5>
+                </div>
+                <div class="card-body">
+                    <table class="card-table table">
+                        <tr>
+                            <td><b>Organization:</b> {{ proj.org_name }}</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{% url 'domain_create' proj_slug=proj.slug%}?next={% url 'proj_detail' slug=proj.slug %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
+                                <b>Domains{% if proj.domain_set.all %} ({{ proj.domain_set.all|length }}){% endif %}: </b> 
+                            {% for domain in proj.domain_set.all %}{{ domain }}
+                            <a href="{% url 'domain_delete' proj_slug=proj.slug pk=domain.pk %}?next={% url 'proj_detail' slug=proj.slug %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>{% if not forloop.last %}, {% endif %} {% endfor %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="{% url 'netaddr_create' proj_slug=proj.slug %}?next={% url 'proj_detail' slug=proj.slug %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
+                                <b>Network Addresses{% if proj.netaddr_set.all %} ({{ proj.netaddr_set.all|length }}){% endif %}: </b> 
+                                {% for net_address in proj.netaddr_set.all %}{{ net_address }} 
+                                <a href="{% url 'netaddr_delete' proj_slug=proj.slug pk=net_address.pk %}?next={% url 'proj_detail' slug=proj.slug %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>{% if not forloop.last %}, {% endif %} {% endfor %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Start Date:</b> {{ proj.init_date }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>End Date:</b> {{ proj.end_date }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <div>
+                        <h5 class="d-inline-block">Systems</h5>
+                        <a href="{% url 'sys_create' proj_slug=proj.slug %}?next={% url 'proj_detail' slug=proj.slug %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
                     </div>
                 </div>
-                <div class="card mb-4">
+                <div class="card-body">
+                {% if proj.sys_set.all %}
+                    <table class="card-table table table-hover">
+                        <tr>
+                            <th>IP Address</th>
+                            <th>FQDN</th>
+                            <th>OS</th>
+                            <th>Version</th>
+                            <th>Ports</th>
+                            <th>Apps</th>
+                        </tr>
+                        {% for sys in proj.sys_set.all %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'sys_detail' proj_slug=proj.slug pk=sys.pk %}">{{ sys.ip_address }}</a>
+                                <a href="{% url 'sys_edit' proj_slug=proj.slug pk=sys.pk %}?next={% url 'proj_detail' slug=proj.slug %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
+                                <a href="{% url 'sys_delete' proj_slug=proj.slug pk=sys.pk %}?next={% url 'proj_detail' slug=proj.slug %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
+                            </td>
+                            <td>{{ sys.fqdn }}</td>
+                            <td>{{ sys.os }} </td>
+                            <td>{{ sys.version }} </td>
+                            <td>
+                            {% if sys.port_set.all %}
+                            <b>{{ sys.port_set.all|length }}:</b> {% for port in sys.port_set.all %}{{ port }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                            {% else %}
+                            <a href="{% url 'port_create' proj_slug=proj.slug sys_pk=sys.pk %}?next={% url 'proj_detail' slug=proj.slug %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
+                            {% endif %}
+                            </td>
+                            <td>
+                            {% if sys.app_set.all %}
+                            <b>{{ sys.app_set.all|length }}:</b> {% for app in sys.app_set.all %}{{ app }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                            {% else %}
+                            <a href="{% url 'app_create' proj_slug=proj.slug sys_pk=sys.pk %}?next={% url 'proj_detail' slug=proj.slug %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
+                            {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                {% endif %}
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="d-inline-block">Comments</h5>
+                </div>
+                <div class="card-body">
+                    <span>{{ proj.comments }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card mb-4">
                     <div class="card-header">
-                        <div>
-                            <h5 class="d-inline-block">Systems</h5>
-                            <a href="{% url 'sys_create' proj_slug=proj.slug %}?next={% url 'proj_detail' slug=proj.slug %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
-                        </div>
+                        <h5 class="d-inline-block">Points of Contact</h5>
+                        <a href="{% url 'poc_create' proj_slug=proj.slug %}?next={% url 'proj_detail' proj.slug %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
                     </div>
                     <div class="card-body">
-                    {% if proj.sys_set.all %}
-                        <table class="card-table table table-hover">
+                    {% if proj.poc_set.all %}
+                        <table class="card-table table table-sm table-hover">
                             <tr>
-                                <th>IP Address</th>
-                                <th>FQDN</th>
-                                <th>OS</th>
-                                <th>Version</th>
-                                <th>Ports</th>
-                                <th>Apps</th>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Email Address</th>
+                                <th>Phone Number</th>
                             </tr>
-                            {% for sys in proj.sys_set.all %}
+                            {% for poc in proj.poc_set.all %}
                             <tr>
                                 <td>
-                                    <a href="{% url 'sys_detail' proj_slug=proj.slug pk=sys.pk %}">{{ sys.ip_address }}</a>
-                                    <a href="{% url 'sys_edit' proj_slug=proj.slug pk=sys.pk %}?next={% url 'proj_detail' slug=proj.slug %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
-                                    <a href="{% url 'sys_delete' proj_slug=proj.slug pk=sys.pk %}?next={% url 'proj_detail' slug=proj.slug %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
+                                    <a href="{% url 'poc_detail' proj_slug=proj.slug pk=poc.pk %}">{{ poc.name }}</a>
+                                    <a href="{% url 'poc_edit' proj_slug=proj.slug pk=poc.pk %}?next={% url 'proj_detail' proj.slug %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
+                                    <a href="{% url 'poc_delete' proj_slug=proj.slug pk=poc.pk %}?next={% url 'proj_detail' proj.slug %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
                                 </td>
-                                <td>{{ sys.fqdn }}</td>
-                                <td>{{ sys.os }} </td>
-                                <td>{{ sys.version }} </td>
-                                <td>
-                                {% if sys.port_set.all %}
-                                <b>{{ sys.port_set.all|length }}:</b> {% for port in sys.port_set.all %}{{ port }}{% if not forloop.last %}, {% endif %}{% endfor %}
-                                {% else %}
-                                <a href="{% url 'port_create' proj_slug=proj.slug sys_pk=sys.pk %}?next={% url 'proj_detail' slug=proj.slug %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
-                                {% endif %}
-                                </td>
-                                <td>
-                                {% if sys.app_set.all %}
-                                <b>{{ sys.app_set.all|length }}:</b> {% for app in sys.app_set.all %}{{ app }}{% if not forloop.last %}, {% endif %}{% endfor %}
-                                {% else %}
-                                <a href="{% url 'app_create' proj_slug=proj.slug sys_pk=sys.pk %}?next={% url 'proj_detail' slug=proj.slug %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
-                                {% endif %}
-                                </td>
+                                <td>{{ poc.role }}</td>
+                                <td>{{ poc.email }}</td>
+                                <td>{{ poc.phone }}</td>
                             </tr>
                             {% endfor %}
                         </table>
                     {% endif %}
-                    </div>
-                </div>
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h5 class="d-inline-block">Comments</h5>
-                    </div>
-                    <div class="card-body">
-                        <span>{{ proj.comments }}</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="card mb-4">
-                        <div class="card-header">
-                            <h5 class="d-inline-block">Points of Contact</h5>
-                            <a href="{% url 'poc_create' proj_slug=proj.slug %}?next={% url 'proj_detail' proj.slug %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
-                        </div>
-                        <div class="card-body">
-                        {% if proj.poc_set.all %}
-                            <table class="card-table table table-sm table-hover">
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Role</th>
-                                    <th>Email Address</th>
-                                    <th>Phone Number</th>
-                                </tr>
-                                {% for poc in proj.poc_set.all %}
-                                <tr>
-                                    <td>
-                                        <a href="{% url 'poc_detail' proj_slug=proj.slug pk=poc.pk %}">{{ poc.name }}</a>
-                                        <a href="{% url 'poc_edit' proj_slug=proj.slug pk=poc.pk %}?next={% url 'proj_detail' proj.slug %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
-                                        <a href="{% url 'poc_delete' proj_slug=proj.slug pk=poc.pk %}?next={% url 'proj_detail' proj.slug %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
-                                    </td>
-                                    <td>{{ poc.role }}</td>
-                                    <td>{{ poc.email }}</td>
-                                    <td>{{ poc.phone }}</td>
-                                </tr>
-                                {% endfor %}
-                            </table>
-                        {% endif %}
-                        </div>
                     </div>
                 </div>
             </div>
