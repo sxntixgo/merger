@@ -40,7 +40,6 @@ This is the list of current features:
 This is the list of features on the pipeline (not in any specific order):
 
 * Users, groups and permissions, to allow collaboration,
-* Improvements to the web interface,
 * Tests,
 * Import from security tools (nmap, nessus, etc),
 * Web API.
@@ -57,11 +56,16 @@ This project is MIT license.
 
 ## Libraries, Frameworks, and Dependencies
 
-* [Bootstrap 4](https://getbootstrap.com)
-* [Django](https://www.djangoproject.com/)
-* [django-crispy-forms](https://github.com/django-crispy-forms/django-crispy-forms)
-* [django-phonenumber-field](https://github.com/stefanfoulis/django-phonenumber-field)
-* [matplotlib](https://matplotlib.org/)
-* [psycopg2](https://www.psycopg.org/)
-* [python-docx](https://python-docx.readthedocs.io/en/latest/)
+* [Bootstrap 4](https://getbootstrap.com) ([License](https://getbootstrap.com/docs/4.0/about/license/))
+* [Django](https://www.djangoproject.com/) ([License](https://github.com/django/django/blob/master/LICENSE))
+* [django-bootstrap-breadcrumbs](https://github.com/prymitive/bootstrap-breadcrumbs/) ([License](https://github.com/prymitive/bootstrap-breadcrumbs/blob/master/LICENSE))
+* [django-crispy-forms](https://github.com/django-crispy-forms/django-crispy-forms) ([License](https://github.com/django-crispy-forms/django-crispy-forms/blob/master/LICENSE.txt))
+* [django-phonenumber-field](https://github.com/stefanfoulis/django-phonenumber-field) ([License](https://github.com/stefanfoulis/django-phonenumber-field/blob/master/LICENSE))
+* [Feather](https://feathericons.com) ([License](https://github.com/feathericons/feather/blob/master/LICENSE))
+* [jQuery](https://jquery.com) ([License](https://jquery.org/license/))
+* [matplotlib](https://matplotlib.org/) ([License](https://matplotlib.org/users/license.html))
+* [PopperJs](https://popper.js.org) ([License](https://github.com/popperjs/popper-core/blob/master/LICENSE.md))
+* [psycopg2](https://www.psycopg.org/) ([License](https://github.com/psycopg/psycopg2/blob/master/LICENSE))
+* [python-docx](https://python-docx.readthedocs.io/en/latest/) ([License](https://github.com/python-openxml/python-docx/blob/master/LICENSE))
+
  

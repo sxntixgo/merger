@@ -2,10 +2,10 @@
 
 {% block content %}
 <section>
-    <h2>Delete {{ template.name }}</h2>
-    <form action="{% url 'template_delete' pk=template.pk %}" method="post"> 
+    <h2>Delete {{ reporttemplate.name }}</h2>
+    <form action="{% url 'template_delete' pk=reporttemplate.pk %}" method="post"> 
     {% csrf_token %}
-    <p>Are you sure you want to delete {{ template.name }}?</p>
+    <p>Are you sure you want to delete {{ reporttemplate.name }}?</p>
     <button type="submit" class="btn btn-danger">Delete</button>
     <a class="btn btn-success text-white" onclick="history.back()">Cancel</a>
     </form>

@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from dotenv import load_dotenv
+
+from django.contrib.messages import constants as messages
+
+load_dotenv()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -34,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_bootstrap_breadcrumbs',
     'phonenumber_field',
     'crispy_forms',
     'main',
@@ -122,8 +128,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
-STTICFILES_DIR = (os.path.join(BASE_DIR, 'static'),)
+STATICFILES_DIR = (os.path.join(BASE_DIR, 'static'),)
 STATIC_URL = '/static/'
+STATIC_ROOT = '/static'
 
 # Django crispy forms
 # https://github.com/django-crispy-forms/django-crispy-forms
@@ -133,3 +140,14 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # Media Directory
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+# Phone number format
+PHONENUMBER_DB_FORMAT = 'INTERNATIONAL'
+
+# Breadcumbs template
+BREADCRUMBS_TEMPLATE = 'breadcrumbs.html'
+
+# Adjusting red color for messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
