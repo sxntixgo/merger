@@ -2,48 +2,14 @@ from django.forms import ModelForm, CheckboxInput, RadioSelect
 
 from .models import ReportTemplate
 
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Div, HTML, Layout, Field, Submit
+
 class ReportTemplateForm(ModelForm):
     
     class Meta:
         model = ReportTemplate
-        fields = [
-            'name', 'description', 'sec_cover', 'cover_title', 'cover_company_name', 'cover_contact_name', 'cover_contact_email', 'cover_contact_phone_number',
-            'sec_toc', 'sec_es', 'es_text', 'sec_sor', 'sec_method', 'sec_method', 'method_text', 'sec_find', 'sec_find_desc', 'sec_find_evid', 
-            'sec_find_sol', 'sec_conc', 'conc_text', 'title_font', 'title_size', 'title_bold', 'title_italic', 'title_color', 'heading_1_font', 
-            'heading_1_size', 'heading_1_bold', 'heading_1_italic', 'heading_1_color', 'heading_2_font', 'heading_2_size', 'heading_2_bold', 
-            'heading_2_italic', 'heading_2_color', 'heading_3_font', 'heading_3_size', 'heading_3_bold', 'heading_3_italic', 'heading_3_color', 
-            'normal_font', 'normal_size', 'normal_bold', 'normal_italic', 'normal_color', 'caption_font', 'caption_size', 'caption_bold', 
-            'caption_italic', 'caption_color', 'risk_critical_color', 'risk_high_color', 'risk_medium_color', 'risk_low_color','risk_info_color'
-        ]
-
-        labels = {
-            'sec_cover': 'Cover',
-            'sec_toc': 'Table of Contents',
-            'sec_es': 'Executive Summary',
-            'sec_sor': 'Summary of Results',
-            'sec_method': 'Methodology',
-            'sec_find': 'Findings',
-            'sec_find_desc': 'Description',
-            'sec_find_evid': 'Evidence',
-            'sec_find_sol': 'Solution',
-            'sec_conc': 'Conclusion',
-
-            'cover_title': 'Title',
-            'cover_company_name': 'Company Name',
-            'cover_contact_name': 'Contact Name',
-            'cover_contact_email': 'Contact Email Address',
-            'cover_contact_phone_number': 'Contact Phone Number',
-        
-            'es_text': 'Executive Summary Text',
-            'method_text': 'Methodology Text',
-            'conc_text': 'Conclusion Text',
-
-            'risk_critical_color': 'Critical Color',
-            'risk_high_color': 'High Color',
-            'risk_medium_color': 'Medium Color',
-            'risk_low_color': 'Low Color',
-            'risk_info_color': 'Info Color',
-        }
+        fields = '__all__'
 
         widgets = {
             'sec_cover': RadioSelect(attrs={'onclick' : "coverSelected();",}),
@@ -51,3 +17,101 @@ class ReportTemplateForm(ModelForm):
             'sec_method': CheckboxInput(attrs={'onclick' : "methodClicked();",}),
             'sec_conc': CheckboxInput(attrs={'onclick' : "concClicked();",}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Div(
+                Div('name', css_class='col-sm-6'),
+                Div(Field('description', style='height: 38px;'), css_class='col-sm-6'),
+                css_class='row',
+            ),
+            Div(Div(HTML('<h3>Cover Type Options</h3>'), css_class='col-sm-12'),
+                css_class='row',
+            ),
+            Div(
+                Div('sec_cover', css_class='col-sm-3',),
+                Div('cover_title', 'cover_company_name', css_class='col-sm-3'),
+                Div('cover_contact_name', Field('cover_contact_email', placeholder='user@domain.com'), css_class='col-sm-3'), 
+                Div(Field('cover_contact_phone_number', placeholder='+1 111 111 1111'), css_class='col-sm-3'), 
+                css_class='row',
+            ),
+            Div(
+                Div(HTML('<h3>Section Options</h3>'), css_class='col-sm-12'),
+                css_class='row',
+            ),
+            Div(
+                Div('sec_toc', 'sec_es', 'sec_sor', 'sec_method', 'sec_method', 'sec_find', 
+                    Div(Div(css_class='col-sm-1'), Div('sec_find_desc', 'sec_find_evid', 'sec_find_sol'), css_class='row'), 
+                    'sec_conc', css_class='col-sm-3',),
+                Div(Field('es_text', rows='3'), Field('method_text', rows='3'), Field('conc_text', rows='3'), css_class='col-sm-9'),
+                css_class='row', 
+            ),
+            Div(
+                Div(HTML('<h3>Heading Options</h3>'), css_class='col-sm-12'),
+                css_class='row',
+            ),
+            Div(
+                Div('title_font', css_class='col-sm-3'),
+                Div('title_size', css_class='col-sm-2'),
+                Div('title_bold', css_class='col-sm-2'),
+                Div('title_italic', css_class='col-sm-2'),
+                Div('title_color', css_class='col-sm-3'),
+                css_class='row', 
+            ),
+            Div(
+                Div('heading_1_font', css_class='col-sm-3'),
+                Div('heading_1_size', css_class='col-sm-2'),
+                Div('heading_1_bold', css_class='col-sm-2'),
+                Div('heading_1_italic', css_class='col-sm-2'),
+                Div('heading_1_color', css_class='col-sm-3'),
+                css_class='row', 
+            ),
+            Div(
+                Div('heading_2_font', css_class='col-sm-3'),
+                Div('heading_2_size', css_class='col-sm-2'),
+                Div('heading_2_bold', css_class='col-sm-2'),
+                Div('heading_2_italic', css_class='col-sm-2'),
+                Div('heading_2_color', css_class='col-sm-3'),
+                css_class='row', 
+            ),
+            Div(
+                Div('heading_3_font', css_class='col-sm-3'),
+                Div('heading_3_size', css_class='col-sm-2'),
+                Div('heading_3_bold', css_class='col-sm-2'),
+                Div('heading_3_italic', css_class='col-sm-2'),
+                Div('heading_3_color', css_class='col-sm-3'),
+                css_class='row', 
+            ),
+            Div(
+                Div('normal_font', css_class='col-sm-3'),
+                Div('normal_size', css_class='col-sm-2'),
+                Div('normal_bold', css_class='col-sm-2'),
+                Div('normal_italic', css_class='col-sm-2'),
+                Div('normal_color', css_class='col-sm-3'),
+                css_class='row', 
+            ),
+            Div(
+                Div('caption_font', css_class='col-sm-3'),
+                Div('caption_size', css_class='col-sm-2'),
+                Div('caption_bold', css_class='col-sm-2'),
+                Div('caption_italic', css_class='col-sm-2'),
+                Div('caption_color', css_class='col-sm-3'),
+                css_class='row', 
+            ),
+            Div(
+                Div(HTML('<h3>Risk Options</h3>'), css_class='col-sm-12'),
+                css_class='row',
+            ),
+            Div(
+                Div('risk_critical_color', css_class='col-sm-2'),
+                Div('risk_high_color', css_class='col-sm-2'),
+                Div('risk_medium_color', css_class='col-sm-2'),
+                Div('risk_low_color', css_class='col-sm-2'),
+                Div('risk_info_color', css_class='col-sm-2'),
+                css_class='row', 
+            ),
+                Submit('save', 'Submit', css_class='btn-success'),
+                HTML('<a name="cancel" class="btn btn-danger" id="button-id-cancel" href="{{ view.success_url }}">Cancel</a>'), 
+        )

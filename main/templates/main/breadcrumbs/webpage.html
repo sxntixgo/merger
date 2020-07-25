@@ -1,0 +1,17 @@
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% if webapp %}
+        {% breadcrumb webapp.port.sys.proj 'proj_detail' slug=webapp.port.sys.proj.slug %}
+        {% breadcrumb webapp.port.sys 'sys_detail' proj_slug=webapp.port.sys.proj.slug pk=webapp.port.sys.pk %}
+        {% breadcrumb webapp.port 'port_detail' proj_slug=webapp.port.sys.proj.slug sys_pk=webapp.port.sys.pk pk=webapp.port.pk %}
+        {% breadcrumb webapp 'webapp_detail' proj_slug=webapp.port.sys.proj.slug sys_pk=webapp.port.sys.pk port_pk=webapp.port.pk pk=webapp.pk %}
+        {% breadcrumb '' '' %}
+    {% else %}
+        {% breadcrumb webpage.webapp.port.sys.proj 'proj_detail' slug=webpage.webapp.port.sys.proj.slug %}
+        {% breadcrumb webpage.webapp.port.sys 'sys_detail' proj_slug=webpage.webapp.port.sys.proj.slug pk=webpage.webapp.port.sys.pk %}
+        {% breadcrumb webpage.webapp.port 'port_detail' proj_slug=webpage.webapp.port.sys.proj.slug sys_pk=webpage.webapp.port.sys.pk pk=webpage.webapp.port.pk %}
+        {% breadcrumb webpage.webapp 'webapp_detail' proj_slug=webpage.webapp.port.sys.proj.slug sys_pk=webpage.webapp.port.sys.pk port_pk=webpage.webapp.port.pk pk=webpage.webapp.pk %}
+        {% breadcrumb webpage 'webpage_detail' proj_slug=webpage.webapp.port.sys.proj.slug sys_pk=webpage.webapp.port.sys.pk port_pk=webpage.webapp.port.pk webapp_pk=webpage.webapp.pk pk=webpage.pk %}
+    {% endif %}
+{% endblock %}

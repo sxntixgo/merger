@@ -1,14 +1,16 @@
 {% extends parent_template|default:'base.html' %}
 {% load crispy_forms_tags %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% include 'main/breadcrumbs/attach.html' %}
+{% endblock %}
 
 {% block content %}
 <section>
     <h2>Create Attachment</h2>
     <form method="post" enctype="multipart/form-data"> 
-    {% csrf_token %}
-    {{ form|crispy }}
-    <button type="submit" class="btn btn-success">Submit</button>
-    <a class="btn btn-danger text-white" onclick="history.back()">Cancel</a>
+    {% crispy form form.helper %}
     </form>
 </section>
 {% endblock content %}

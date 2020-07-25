@@ -1,4 +1,5 @@
 {% extends parent_template|default:'base.html' %}
+{% load static %}
 
 {% block content %}
     <div class="container-fluid">
@@ -7,7 +8,7 @@
         </div>
         <div class="row">
             <div class="col-sm-6">
-                <div class="card">
+                <div class="card mb-4">
                     <div class="card-header">
                         <h5 class="d-inline-block">Create</h5>
                     </div>
@@ -38,11 +39,10 @@
                         {% endif %}
                     </div>
                 </div>
-                <br>
-                <div class="card">
+                <div class="card mb-4">
                     <div class="card-header">
                         <h5 class="d-inline-block">Report Templates</h5> 
-                        <a class="badge badge-success align-text-top"href="{% url 'template_create' %}">Create</a>
+                        <a href="{% url 'template_create' %}"><image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create"></a>
                     </div>
                     <div class="card-body">
                         <table class="table-card table table-sm table-hover">
@@ -54,9 +54,9 @@
                             <tr>
                                 <td>
                                     <div>
-                                    <h6 class="d-inline-block">{{ template }}</h6>
-                                    <a class="badge badge-warning align-text-top"href="{% url 'template_edit' pk=template.pk %}">Edit</a>
-                                    <a class="badge badge-danger align-text-top"href="{% url 'template_delete' pk=template.pk %}">Delete</a>
+                                        <h6 class="d-inline-block">{{ template }}</h6>
+                                        <a href="{% url 'template_edit' pk=template.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
+                                        <a href="{% url 'template_delete' pk=template.pk %}"><image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
                                     </div>
                                 </td>
                                 <td>{{ template.description }}</td>
@@ -67,7 +67,7 @@
                 </div>
             </div>
             <div class="col-sm-6">
-                <div class="card">
+                <div class="card mb-4">
                     <div class="card-header">
                         <h5 class="d-inline-block">Available Reports</h5>
                     </div>
@@ -81,8 +81,10 @@
                             <tr>
                                 <td>
                                     <div>
-                                    <h6 class="d-inline-block"><a href="{{ report.media.url }}">{{ report.name }}</a></h6>
-                                    <a class="badge badge-danger align-text-top"href="{% url 'report_delete' pk=report.pk %}">Delete</a>
+                                        <h6 class="d-inline-block"><a href="{{ report.media.url }}">{{ report.name }}</a></h6>
+                                        <a href="{% url 'report_delete' pk=report.pk %}">
+                                            <image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete">
+                                        </a>
                                     </div>
                                 </td>
                                 <td>{{ report.timestamp }}</td>

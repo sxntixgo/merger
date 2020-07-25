@@ -1,88 +1,138 @@
 {% extends parent_template|default:'base.html' %}
+{% load static %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% include 'main/breadcrumbs/vuln.html' %}
+{% endblock %}
 
 {% block content %}
 <section>
-    <div class="container-fluid">
-        <div class="row">
-            <div>
-                <h2 class="d-inline-block">{{ vuln }}</h2>
-                <a class="badge badge-warning align-text-top" href="{% url 'vuln_edit' pk=vuln.pk %}">Edit</a>
-                <a class="badge badge-danger align-text-top" href="{% url 'vuln_delete' pk=vuln.pk %}">Delete</a>
+    <div class="row">
+        <div class="col-sm-12">
+            <h2 class="d-inline-block">{{ vuln }}</h2>
+            {% if vuln.webpage %}
+            <a href="{% url 'vuln_edit' proj_slug=vuln.webpage.webapp.port.sys.proj.slug sys_pk=vuln.webpage.webapp.port.sys.pk port_pk=vuln.webpage.webapp.port.pk webapp_pk=vuln.webpage.webapp.pk webpage_pk=vuln.webpage.pk pk=vuln.pk %}?next={% url 'vuln_detail' proj_slug=vuln.webpage.webapp.port.sys.proj.slug sys_pk=vuln.webpage.webapp.port.sys.pk port_pk=vuln.webpage.webapp.port.pk webapp_pk=vuln.webpage.webapp.pk webpage_pk=vuln.webpage.pk pk=vuln.pk %}">
+            {% elif vuln.webapp %}
+            <a href="{% url 'vuln_edit' proj_slug=vuln.webapp.port.sys.proj.slug sys_pk=vuln.webapp.port.sys.pk port_pk=vuln.webapp.port.pk webapp_pk=vuln.webapp.pk pk=vuln.pk %}?next={% url 'vuln_detail' proj_slug=vuln.webapp.port.sys.proj.slug sys_pk=vuln.webapp.port.sys.pk port_pk=vuln.webapp.port.pk webapp_pk=vuln.webapp.pk pk=vuln.pk %}">
+            {% elif vuln.port %}
+            <a href="{% url 'vuln_edit' proj_slug=vuln.port.sys.proj.slug sys_pk=vuln.port.sys.pk port_pk=vuln.port.pk pk=vuln.pk %}?next={% url 'vuln_detail' proj_slug=vuln.port.sys.proj.slug sys_pk=vuln.port.sys.pk port_pk=vuln.port.pk pk=vuln.pk %}">
+            {% elif vuln.app %}
+            <a href="{% url 'vuln_edit' proj_slug=vuln.app.sys.proj.slug sys_pk=vuln.app.sys.pk port_pk=vuln.app.pk pk=vuln.pk %}?next={% url 'vuln_detail' proj_slug=vuln.app.sys.proj.slug sys_pk=vuln.app.sys.pk app_pk=vuln.app.pk pk=vuln.pk %}">
+            {% elif vuln.sys %}
+            <a href="{% url 'vuln_edit' proj_slug=vuln.sys.proj.slug sys_pk=vuln.sys.pk pk=vuln.pk %}?next={% url 'vuln_detail' proj_slug=vuln.sys.proj.slug sys_pk=vuln.sys.pk pk=vuln.pk %}">
+            {% endif %}
+                <image style="vertical-align: baseline;" src="{% static 'img/edit.svg' %}" alt="Edit"></a>
+            {% if vuln.webpage %}
+            <a href="{% url 'vuln_delete' proj_slug=vuln.webpage.webapp.port.sys.proj.slug sys_pk=vuln.webpage.webapp.port.sys.pk port_pk=vuln.webpage.webapp.port.pk webapp_pk=vuln.webpage.webapp.pk webpage_pk=vuln.webpage.pk pk=vuln.pk %}?next={% url 'vuln_detail' proj_slug=vuln.webpage.webapp.port.sys.proj.slug sys_pk=vuln.webpage.webapp.port.sys.pk port_pk=vuln.webpage.webapp.port.pk webapp_pk=vuln.webpage.webapp.pk webpage_pk=vuln.webpage.pk pk=vuln.pk %}">
+            {% elif vuln.webapp %}
+            <a href="{% url 'vuln_delete' proj_slug=vuln.webapp.port.sys.proj.slug sys_pk=vuln.webapp.port.sys.pk port_pk=vuln.webapp.port.pk webapp_pk=vuln.webapp.pk pk=vuln.pk %}?next={% url 'vuln_detail' proj_slug=vuln.webapp.port.sys.proj.slug sys_pk=vuln.webapp.port.sys.pk port_pk=vuln.webapp.port.pk webapp_pk=vuln.webapp.pk pk=vuln.pk %}">
+            {% elif vuln.port %}
+            <a href="{% url 'vuln_delete' proj_slug=vuln.port.sys.proj.slug sys_pk=vuln.port.sys.pk port_pk=vuln.port.pk pk=vuln.pk %}?next={% url 'vuln_detail' proj_slug=vuln.port.sys.proj.slug sys_pk=vuln.port.sys.pk port_pk=vuln.port.pk pk=vuln.pk %}">
+            {% elif vuln.app %}
+            <a href="{% url 'vuln_delete' proj_slug=vuln.app.sys.proj.slug sys_pk=vuln.app.sys.pk port_pk=vuln.app.pk pk=vuln.pk %}?next={% url 'vuln_detail' proj_slug=vuln.app.sys.proj.slug sys_pk=vuln.app.sys.pk app_pk=vuln.app.pk pk=vuln.pk %}">
+            {% elif vuln.sys %}
+            <a href="{% url 'vuln_delete' proj_slug=vuln.sys.proj.slug sys_pk=vuln.sys.pk pk=vuln.pk %}?next={% url 'vuln_detail' proj_slug=vuln.sys.proj.slug sys_pk=vuln.sys.pk pk=vuln.pk %}">
+            {% endif %}
+                <image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete"></a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Info</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><b>Title:</b> {{ vuln.title }}</li>
+                        <li class="list-group-item"><b>CVE:</b> {{ vuln.cve }}</li>
+                        <li class="list-group-item"><b>Score:</b> {{ vuln.score }}</li>
+                        <li class="list-group-item"><b>Risk:</b> {{ vuln.risk }}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="d-inline-block">Attachments</h5>
+                    {% if vuln.webpage %}
+                    <a href="{% url 'attach_create' proj_slug=vuln.webpage.webapp.port.sys.proj.slug sys_pk=vuln.webpage.webapp.port.sys.pk port_pk=vuln.webpage.webapp.port.pk webapp_pk=vuln.webpage.webapp.pk webpage_pk=vuln.webpage.pk vuln_pk=vuln.pk %}?next={% url 'vuln_detail' proj_slug=vuln.webpage.webapp.port.sys.proj.slug sys_pk=vuln.webpage.webapp.port.sys.pk port_pk=vuln.webpage.webapp.port.pk webapp_pk=vuln.webpage.webapp.pk webpage_pk=vuln.webpage.pk pk=vuln.pk %}">
+                    {% elif vuln.webapp %}
+                    <a href="{% url 'attach_create' proj_slug=vuln.webapp.port.sys.proj.slug sys_pk=vuln.webapp.port.sys.pk port_pk=vuln.webapp.port.pk webapp_pk=vuln.webapp.pk vuln_pk=vuln.pk %}?next={% url 'vuln_detail' proj_slug=vuln.webapp.port.sys.proj.slug sys_pk=vuln.webapp.port.sys.pk port_pk=vuln.webapp.port.pk webapp_pk=vuln.webapp.pk pk=vuln.pk %}">
+                    {% elif vuln.port %}
+                    <a href="{% url 'attach_create' proj_slug=vuln.port.sys.proj.slug sys_pk=vuln.port.sys.pk port_pk=vuln.port.pk vuln_pk=vuln.pk %}?next={% url 'vuln_detail' proj_slug=vuln.port.sys.proj.slug sys_pk=vuln.port.sys.pk port_pk=vuln.port.pk pk=vuln.pk %}">
+                    {% elif vuln.app %}
+                    <a href="{% url 'attach_create' proj_slug=vuln.app.sys.proj.slug sys_pk=vuln.app.sys.pk app_pk=vuln.app.pk vuln_pk=vuln.pk %}?next={% url 'vuln_detail' proj_slug=vuln.app.sys.proj.slug sys_pk=vuln.app.sys.pk app_pk=vuln.app.pk pk=vuln.pk %}">
+                    {% elif vuln.sys %}
+                    <a href="{% url 'attach_create' proj_slug=vuln.sys.proj.slug sys_pk=vuln.sys.pk vuln_pk=vuln.pk %}?next={% url 'vuln_detail' proj_slug=vuln.sys.proj.slug sys_pk=vuln.sys.pk pk=vuln.pk %}">
+                    {% endif %}
+                        <image style="vertical-align: baseline;" src="{% static 'img/plus-square.svg' %}" alt="Create">
+                    </a>
+                </div>
+                <div class="card-body">
+                {% if vuln.attach_set.all %}
+                    <table class="table-card table table-sm table-hover">
+                        <tr>
+                            <th>Name</th>
+                            <th>Caption</th>
+                        </tr>
+                        {% for attach in vuln.attach_set.all %}
+                        <tr>
+                            <td>
+                                <a href="{{ attach.media.url }}" target="_blank">{{ attach }}</a>
+                                {% if vuln.webpage %}
+                                <a href="{% url 'attach_delete' proj_slug=vuln.webpage.webapp.port.sys.proj.slug sys_pk=vuln.webpage.webapp.port.sys.pk port_pk=vuln.webpage.webapp.port.pk webapp_pk=vuln.webpage.webapp.pk webpage_pk=vuln.webpage.pk vuln_pk=vuln.pk pk=attach.pk %}?next={% url 'vuln_detail' proj_slug=vuln.webpage.webapp.port.sys.proj.slug sys_pk=vuln.webpage.webapp.port.sys.pk port_pk=vuln.webpage.webapp.port.pk webapp_pk=vuln.webpage.webapp.pk webpage_pk=vuln.webpage.pk pk=vuln.pk %}">
+                                {% elif vuln.webapp %}
+                                <a href="{% url 'attach_delete' proj_slug=vuln.webapp.port.sys.proj.slug sys_pk=vuln.webapp.port.sys.pk port_pk=vuln.webapp.port.pk webapp_pk=vuln.webapp.pk vuln_pk=vuln.pk pk=attach.pk %}?next={% url 'vuln_detail' proj_slug=vuln.webapp.port.sys.proj.slug sys_pk=vuln.webapp.port.sys.pk port_pk=vuln.webapp.port.pk webapp_pk=vuln.webapp.pk pk=vuln.pk %}">
+                                {% elif vuln.port %}
+                                <a href="{% url 'attach_delete' proj_slug=vuln.port.sys.proj.slug sys_pk=vuln.port.sys.pk port_pk=vuln.port.pk vuln_pk=vuln.pk pk=attach.pk %}?next={% url 'vuln_detail' proj_slug=vuln.port.sys.proj.slug sys_pk=vuln.port.sys.pk port_pk=vuln.port.pk pk=vuln.pk %}">
+                                {% elif vuln.app %}
+                                <a href="{% url 'attach_delete' proj_slug=vuln.app.sys.proj.slug sys_pk=vuln.app.sys.pk app_pk=vuln.app.pk vuln_pk=vuln.pk pk=attach.pk %}?next={% url 'vuln_detail' proj_slug=vuln.app.sys.proj.slug sys_pk=vuln.app.sys.pk app_pk=vuln.app.pk pk=vuln.pk %}">
+                                {% elif vuln.sys %}
+                                <a href="{% url 'attach_delete' proj_slug=vuln.sys.proj.slug sys_pk=vuln.sys.pk vuln_pk=vuln.pk pk=attach.pk %}?next={% url 'vuln_detail' proj_slug=vuln.sys.proj.slug sys_pk=vuln.sys.pk pk=vuln.pk %}">
+                                {% endif %}
+                                    <image style="vertical-align: baseline;" src="{% static 'img/x-square.svg' %}" alt="Delete">
+                                </a>
+                            </td>
+                            <td>{{ attach.caption }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                {% endif %}
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Comments</h5>
+                </div>
+                <div class="card-body">
+                    {{ vuln.comments }}
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Info</h5>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><b>Title:</b> {{ vuln.title }}</li>
-                            <li class="list-group-item"><b>CVE:</b> {{ vuln.cve }}</li>
-                            <li class="list-group-item"><b>Score:</b> {{ vuln.score }}</li>
-                            <li class="list-group-item"><b>Risk:</b> {{ vuln.risk }}</li>
-                        </ul>
-                    </div>
+        <div class="col-sm-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Description</h5>
                 </div>
-                <br>
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="d-inline-block">Attachments</h5> <a class="badge badge-success align-text-top" href="{% url 'attach_create' %}">Create</a>
-                    </div>
-                    <div class="card-body">
-                    {% if vuln.attach_set.all %}
-                        <table class="table-card table table-sm table-hover">
-                            <tr>
-                                <th>Name</th>
-                                <th>Caption</th>
-                            </tr>
-                            {% for attach in vuln.attach_set.all %}
-                            <tr>
-                                <td><a href="{{ attach.media.url }}" target="_blank">{{ attach }}</a> <a class="badge badge-danger align-text-top" href="{% url 'attach_delete' pk=attach.pk %}">Delete</a></td>
-                                <td>{{ attach.caption }}</td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    {% endif %}
-                    </div>
-                </div>
-                <br>
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Comments</h5>
-                    </div>
-                    <div class="card-body">
-                        {{ vuln.comments }}
-                    </div>
+                <div class="card-body">
+                    {{ vuln.description }}
                 </div>
             </div>
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Description</h5>
-                    </div>
-                    <div class="card-body">
-                        {{ vuln.description }}
-                    </div>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Evidence</h5>
                 </div>
-                <br>
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Evidence</h5>
-                    </div>
-                    <div class="card-body">
-                        {{ vuln.evidence }}
-                    </div>
+                <div class="card-body">
+                    {{ vuln.evidence }}
                 </div>
-                <br>
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Solution</h5>
-                    </div>
-                    <div class="card-body">
-                        {{ vuln.solution }}
-                    </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Solution</h5>
+                </div>
+                <div class="card-body">
+                    {{ vuln.solution }}
                 </div>
             </div>
         </div>

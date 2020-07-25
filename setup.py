@@ -26,18 +26,19 @@ def main():
     web_pass = ''.join(secrets.choice(dictionary) for i in range(64))
 
     with open('.env', 'w') as f:
-        f.write('DB_PASSWORD=' + db_pass + '\n')
-        f.write('WEB_PASSWORD=' + web_pass + '\n')
+        f.write(f'DB_PASSWORD={db_pass}\n')
+        f.write(f'WEB_PASSWORD={web_pass}\n')
         if opts:
             for o, a in opts:
                 if o == '-v':
-                    f.write('DB_ADDRESS=localhost' + '\n')
-                    print('for i in `cat .env`; do export $i; done')
+                    f.write('DB_ADDRESS=localhost\n')
+
         else:
-            f.write('DB_ADDRESS=db' + '\n')
+            f.write('DB_ADDRESS=db\n')
 
     os.makedirs('merger/reports', exist_ok=True)
     os.makedirs('media/uploads', exist_ok=True)
+    os.makedirs('static', exist_ok=True)
                     
 
 if __name__ == "__main__":

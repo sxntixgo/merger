@@ -1,13 +1,18 @@
 {% extends parent_template|default:'base.html' %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% include 'main/breadcrumbs/webpage.html' %}
+{% endblock %}
 
 {% block content %}
 <section>
     <h2>Delete {{ webpage }}</h2>
-    <form action="{% url 'webpage_delete' pk=webpage.pk %}" method="post"> 
+    <form action="{% url 'webpage_delete' proj_slug=webpage.webapp.port.sys.proj.slug sys_pk=webpage.webapp.port.sys.pk port_pk=webpage.webapp.port.pk webapp_pk=webpage.webapp.pk pk=webpage.pk %}?next={% url 'webapp_detail' proj_slug=webpage.webapp.port.sys.proj.slug sys_pk=webpage.webapp.port.sys.pk port_pk=webpage.webapp.port.pk pk=webpage.webapp.pk %}" method="post"> 
     {% csrf_token %}
     <p>Are you sure you want to delete {{ webpage }}?</p>
     <button type="submit" class="btn btn-danger">Delete</button>
-    <a class="btn btn-success text-white" onclick="history.back()">Cancel</a>
+    <a class="btn btn-success text-white" href="{{ view.get_success_url }}">Cancel</a>
     </form>
 </section>
 {% endblock content %}

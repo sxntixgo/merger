@@ -1,13 +1,18 @@
 {% extends parent_template|default:'base.html' %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% include 'main/breadcrumbs/attach.html' %}
+{% endblock %}
 
 {% block content %}
 <section>
     <h2>Delete {{ attach }}</h2>
-    <form action="{% url 'attach_delete' pk=attach.pk %}" method="post"> 
+    <form method="post">
     {% csrf_token %}
     <p>Are you sure you want to delete {{ attach }}?</p>
     <button type="submit" class="btn btn-danger">Delete</button>
-    <a class="btn btn-success text-white" onclick="history.back()">Cancel</a>
+    <a class="btn btn-success text-white" href="{{ view.get_success_url }}">Cancel</a>
     </form>
 </section>
 {% endblock content %}
