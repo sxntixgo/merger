@@ -24,7 +24,7 @@ Clone the repository with:
 git clone --depth 1 https://github.com/sxntixgo/merger.git
 ```
 
-***Note:** we use `depth -1` to clone the lastest version of merger*
+***Note:** we use `depth -1` to clone the latest version of merger*
 
 ### Generate `.env` file and additional directories
 
@@ -91,12 +91,13 @@ pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
 ```
 
-### Generate `.env` file and `media` directory
+### Generate `.env` file and additional directories
 
-The `.env` file must contain the password for the DB and the Web application. The `media` directory contains two more directories: `reports` and `uploads`. You can generate all of them with:
+The `.env` file must contain the password for the DB and the Web application. The `media` directory contains two more directories: `reports` and `uploads`. The `static` directory will contain all the static files served by nginx. You can generate all of them with:
 
 ```bash
-python3 setup.py -v
+cd merger
+python3 setup.py
 ```
 
 #### Setup the dababase
@@ -119,6 +120,13 @@ Migrate changes to the database
 ```bash
 python manage.py migrate
 ```
+
+#### Change debug config
+
+If you are running this locally, you need to change `DEBUG = False` to `DEBUG = True` from `meger/settings.py` (line 24), since Django's does not serve static files when not in debug mode.
+
+If you want to run the venv setup on a production environment, check the following page: https://djangocentral.com/deploy-django-with-nginx-gunicorn-postgresql-and-lets-encrypt-ssl-on-ubuntu/
+
 
 ### Run
 
