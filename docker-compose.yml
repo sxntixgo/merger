@@ -11,12 +11,12 @@ services:
   web:
     build: .
     container_name: merger_web
-    command: bash -c "python manage.py collectstatic --no-input && python manage.py migrate && gunicorn merger.wsgi -b 0.0.0.0:8000"
+    command: bash -c "python manage.py collectstatic --no-input && python manage.py migrate && gunicorn merger.wsgi -b 0.0.0.0:8080"
     volumes:
       - .:/code
       - ./static:/static
     expose:
-      - "8000"
+      - "8080"
     environment:
       - DB_PASSWORD=${DB_PASSWORD}
       - WEB_PASSWORD=${WEB_PASSWORD}
