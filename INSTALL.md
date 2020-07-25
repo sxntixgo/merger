@@ -26,9 +26,9 @@ git clone --depth 1 https://github.com/sxntixgo/merger.git
 
 ***Note:** we use `depth -1` to clone the lastest version of merger*
 
-### Generate `.env` file and `media` directory
+### Generate `.env` file and additional directories
 
-The `.env` file must contain the password for the DB and the Web application. The `media` directory contains two more directories: `reports` and `uploads`. You can generate all of them with:
+The `.env` file must contain the password for the DB and the Web application. The `media` directory contains two more directories: `reports` and `uploads`. The `static` directory will contain all the static files served by nginx. You can generate all of them with:
 
 ```bash
 cd merger
@@ -40,7 +40,7 @@ python3 setup.py
 To build and run the images, execute (you might need use sudo):
 
 ```bash
-docker-compose up
+sudo docker-compose up
 ```
 
 ### Access the application
