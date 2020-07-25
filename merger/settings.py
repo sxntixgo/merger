@@ -130,6 +130,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 STATICFILES_DIR = (os.path.join(BASE_DIR, 'static'),)
 STATIC_URL = '/static/'
+STATIC_ROOT = '/static'
 
 # Django crispy forms
 # https://github.com/django-crispy-forms/django-crispy-forms

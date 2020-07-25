@@ -3,20 +3,33 @@ version: '3'
 services:
   db:
     image: postgres
+    container_name: merger_db
     environment:
       - POSTGRES_DB=merger
       - POSTGRES_USER=merger
       - POSTGRES_PASSWORD=${DB_PASSWORD}
   web:
     build: .
-    command: bash -c "python manage.py migrate; python manage.py runserver 0.0.0.0:8000"
+    container_name: merger_web
+    command: bash -c "python manage.py collectstatic --no-input && python manage.py migrate && gunicorn merger.wsgi -b 0.0.0.0:8000"
     volumes:
       - .:/code
-    ports:
-      - "8000:8000"
+      - ./static:/static
+    expose:
+      - "8000"
     environment:
       - DB_PASSWORD=${DB_PASSWORD}
       - WEB_PASSWORD=${WEB_PASSWORD}
       - DB_ADDRESS=${DB_ADDRESS}
     depends_on:
       - db
+  nginx:
+    image: nginx:latest
+    container_name: merger_nginx
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./static:/static
+    depends_on:
+      - web
